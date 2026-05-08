@@ -1,0 +1,207 @@
+<section class="packages-sec" id="packages">
+<div class="sec-center fade-up" style="position:relative;z-index:1">
+<div class="pkg-eyebrow">Solar Packages</div>
+<h2 class="pkg-title">Choose the system that fits your life</h2>
+<p class="pkg-sub">Start by telling us your average monthly electricity bill. We'll guide you to the right package — one that maximizes your savings from day one.</p>
+<div class="bill-finder">
+<span class="bill-finder-label">What is your average monthly electricity bill?</span>
+<select class="bill-selector" id="billFinder" onchange="highlightPackage(this.value)">
+<option value="">Select your bill range...</option>
+<option value="sunrise">Below ₱5,000</option>
+<option value="sunrise">₱5,000 – ₱8,000</option>
+<option value="sunbeam">₱8,000 – ₱12,000</option>
+<option value="sunbeam">₱12,000 – ₱20,000</option>
+<option value="sunburst">₱20,000 – ₱40,000</option>
+<option value="sunburst">Above ₱40,000</option>
+</select>
+</div>
+<div class="bill-hint" id="billHint"></div>
+</div>
+<!-- Customization Banner -->
+<div class="pkg-custom-banner fade-up">
+<div class="pkg-custom-banner-icon">
+<svg fill="none" height="20" stroke="#F59E0B" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="20"><circle cx="12" cy="12" r="3"></circle><path d="M19.07 4.93l-1.41 1.41M6.34 17.66l-1.41 1.41M21 12h-2M5 12H3M18.36 18.36l-1.41-1.41M7.05 7.05L5.64 5.64M12 19v2M12 3V1"></path></svg>
+</div>
+<div class="pkg-custom-banner-text">
+<strong>Don't see a perfect match? We specialize in Custom-Engineered Systems.</strong>
+<span>Every roof is different. Every household and business has a unique energy footprint. We tailor your actual system size — these packages are a starting point, not a ceiling.</span>
+</div>
+<button class="pkg-custom-banner-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Talk to an Engineer</button>
+</div>
+<!-- Baseline Note -->
+<div class="pkg-baseline-note fade-up">
+<svg fill="none" height="16" stroke="rgba(245,158,11,.8)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
+<span><strong style="color:rgba(255,255,255,.85)">Every JAC Solar system is custom-engineered.</strong> These packages serve as a baseline — your actual system will be sized precisely to your energy footprint, roof layout, and budget during your free site assessment.</span>
+</div>
+<div class="pkg-grid fade-up" id="pkgGrid">
+<!-- SUNRISE -->
+<div class="pkg-card" id="card-sunrise">
+<div class="pkg-header h-sunrise">
+<div class="pkg-package-name">Sunrise Package</div>
+<div class="pkg-tagline">A smart start for typical Filipino homes</div>
+<div class="pkg-fit">
+<svg fill="none" height="14" stroke="rgba(255,255,255,.65)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="14"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          Perfect for a typical 3-bedroom Filipino home — runs your aircon, refrigerator, lights, and daily household essentials comfortably.
+        </div>
+</div>
+<div class="pkg-savings">
+<div class="savings-label">Estimated Monthly Savings</div>
+<div class="savings-amount">₱3,000 – ₱6,000</div>
+<div class="savings-sub">based on average residential usage in the Philippines</div>
+</div>
+<div class="pkg-body">
+<div class="pkg-spec-row">
+<span class="pkg-spec-label"><svg fill="none" height="14" stroke="var(--muted)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="14"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>System Size</span>
+<span class="pkg-spec-value">7.56 kWp</span>
+</div>
+<div class="pkg-spec-row">
+<span class="pkg-spec-label"><svg fill="none" height="14" stroke="var(--muted)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="7" width="7" x="3" y="3"></rect><rect height="7" width="7" x="14" y="3"></rect><rect height="7" width="7" x="3" y="14"></rect><path d="M14 17h7M17 14v7"></path></svg>Solar Panels</span>
+<span class="pkg-spec-value">18 Panels</span>
+</div>
+<div class="pkg-spec-row">
+<span class="pkg-spec-label"><svg fill="none" height="14" stroke="var(--muted)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="14"><circle cx="12" cy="12" r="5"></circle><line x1="12" x2="12" y1="1" y2="3"></line><line x1="12" x2="12" y1="21" y2="23"></line><line x1="4.22" x2="5.64" y1="4.22" y2="5.64"></line><line x1="18.36" x2="19.78" y1="18.36" y2="19.78"></line><line x1="1" x2="3" y1="12" y2="12"></line><line x1="21" x2="23" y1="12" y2="12"></line></svg>Est. Monthly Generation</span>
+<span class="pkg-spec-value">~756 kWh</span>
+</div>
+<div class="pkg-spec-row">
+<span class="pkg-spec-label"><svg fill="none" height="14" stroke="var(--muted)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="14"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>Power Capacity</span>
+<span class="pkg-spec-value">1.5HP Aircon + Essentials</span>
+</div>
+<div class="pkg-spec-row">
+<span class="pkg-spec-label"><svg fill="none" height="14" stroke="var(--muted)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="13" rx="2" width="22" x="1" y="6"></rect><path d="M23 13H1"></path></svg>Best For</span>
+<span class="pkg-spec-value">Bills ₱3,000 – ₱8,000/mo</span>
+</div>
+<div class="pkg-appliances">
+<div class="pkg-app-label">Can comfortably power</div>
+<div class="pkg-app-icons">
+<div class="app-icon-item"><div class="app-icon-circle"><svg fill="none" height="20" stroke="#0EA5E9" stroke-linecap="round" stroke-width="1.75" viewbox="0 0 24 24" width="20"><rect height="13" rx="2" width="18" x="3" y="3"></rect><path d="M7 20h10M10 17v3M14 17v3"></path></svg></div><span class="app-icon-label">1.5HP Aircon</span></div>
+<div class="app-icon-item"><div class="app-icon-circle"><svg fill="none" height="20" stroke="#10B981" stroke-linecap="round" stroke-width="1.75" viewbox="0 0 24 24" width="20"><rect height="20" rx="2" width="14" x="5" y="2"></rect><path d="M5 10h14"></path></svg></div><span class="app-icon-label">Refrigerator</span></div>
+<div class="app-icon-item"><div class="app-icon-circle"><svg fill="none" height="20" stroke="#F59E0B" stroke-linecap="round" stroke-width="1.75" viewbox="0 0 24 24" width="20"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"></path></svg></div><span class="app-icon-label">Lights &amp; Fans</span></div>
+<div class="app-icon-item"><div class="app-icon-circle"><svg fill="none" height="20" stroke="#8B5CF6" stroke-linecap="round" stroke-width="1.75" viewbox="0 0 24 24" width="20"><rect height="20" rx="2" width="14" x="5" y="2"></rect><path d="M12 18h.01"></path></svg></div><span class="app-icon-label">Devices &amp; TV</span></div>
+</div>
+</div>
+<div class="pkg-badges">
+<span class="pkg-badge"><svg fill="none" height="11" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" viewbox="0 0 24 24" width="11"><polyline points="20 6 9 17 4 12"></polyline></svg>Net Metering Ready</span>
+<span class="pkg-badge b-blue"><svg fill="none" height="11" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" viewbox="0 0 24 24" width="11"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>25-Year Lifespan</span>
+</div>
+</div>
+<div class="pkg-footer">
+<button class="btn-pkg-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get My <span style="letter-spacing:.04em">FREE</span> Quote <svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" viewbox="0 0 24 24" width="14"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></button>
+<button class="btn-pkg-secondary">Download Package Specs</button>
+<p class="pkg-card-custom-note">Fully customizable based on site assessment.</p>
+</div>
+</div>
+<!-- SUNBEAM -->
+<div class="pkg-card popular" id="card-sunbeam">
+<div class="pkg-header h-sunbeam">
+<div class="popular-badge">Most Popular</div>
+<div class="pkg-package-name">Sunbeam Package</div>
+<div class="pkg-tagline">The go-to for growing families and SMEs</div>
+<div class="pkg-fit">
+<svg fill="none" height="14" stroke="rgba(255,255,255,.65)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="14"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          Ideal for larger homes and small-to-medium businesses — handles 3 aircons and complete home or office loads without compromise.
+        </div>
+</div>
+<div class="pkg-savings">
+<div class="savings-label">Estimated Monthly Savings</div>
+<div class="savings-amount">₱6,000 – ₱12,000</div>
+<div class="savings-sub">based on average medium-load residential and SME usage</div>
+</div>
+<div class="pkg-body">
+<div class="pkg-spec-row">
+<span class="pkg-spec-label"><svg fill="none" height="14" stroke="var(--muted)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="14"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>System Size</span>
+<span class="pkg-spec-value">12.6 kWp</span>
+</div>
+<div class="pkg-spec-row">
+<span class="pkg-spec-label"><svg fill="none" height="14" stroke="var(--muted)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="7" width="7" x="3" y="3"></rect><rect height="7" width="7" x="14" y="3"></rect><rect height="7" width="7" x="3" y="14"></rect><path d="M14 17h7M17 14v7"></path></svg>Solar Panels</span>
+<span class="pkg-spec-value">30 Panels</span>
+</div>
+<div class="pkg-spec-row">
+<span class="pkg-spec-label"><svg fill="none" height="14" stroke="var(--muted)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="14"><circle cx="12" cy="12" r="5"></circle><line x1="12" x2="12" y1="1" y2="3"></line><line x1="12" x2="12" y1="21" y2="23"></line><line x1="4.22" x2="5.64" y1="4.22" y2="5.64"></line><line x1="18.36" x2="19.78" y1="18.36" y2="19.78"></line><line x1="1" x2="3" y1="12" y2="12"></line><line x1="21" x2="23" y1="12" y2="12"></line></svg>Est. Monthly Generation</span>
+<span class="pkg-spec-value">~1,260 kWh</span>
+</div>
+<div class="pkg-spec-row">
+<span class="pkg-spec-label"><svg fill="none" height="14" stroke="var(--muted)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="14"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>Power Capacity</span>
+<span class="pkg-spec-value">3 Aircons + Complete Home</span>
+</div>
+<div class="pkg-spec-row">
+<span class="pkg-spec-label"><svg fill="none" height="14" stroke="var(--muted)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="13" rx="2" width="22" x="1" y="6"></rect><path d="M23 13H1"></path></svg>Best For</span>
+<span class="pkg-spec-value">Bills ₱8,000 – ₱20,000/mo</span>
+</div>
+<div class="pkg-appliances">
+<div class="pkg-app-label">Can comfortably power</div>
+<div class="pkg-app-icons">
+<div class="app-icon-item"><div class="app-icon-circle"><svg fill="none" height="20" stroke="#0EA5E9" stroke-linecap="round" stroke-width="1.75" viewbox="0 0 24 24" width="20"><rect height="13" rx="2" width="18" x="3" y="3"></rect><path d="M7 20h10M10 17v3M14 17v3"></path></svg></div><span class="app-icon-label">3 Aircons</span></div>
+<div class="app-icon-item"><div class="app-icon-circle"><svg fill="none" height="20" stroke="#10B981" stroke-linecap="round" stroke-width="1.75" viewbox="0 0 24 24" width="20"><rect height="20" rx="2" width="14" x="5" y="2"></rect><path d="M5 10h14"></path></svg></div><span class="app-icon-label">Refrigerator</span></div>
+<div class="app-icon-item"><div class="app-icon-circle"><svg fill="none" height="20" stroke="#F59E0B" stroke-linecap="round" stroke-width="1.75" viewbox="0 0 24 24" width="20"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg></div><span class="app-icon-label">Washing Machine</span></div>
+<div class="app-icon-item"><div class="app-icon-circle"><svg fill="none" height="20" stroke="#8B5CF6" stroke-linecap="round" stroke-width="1.75" viewbox="0 0 24 24" width="20"><rect height="20" rx="2" width="14" x="5" y="2"></rect><path d="M12 18h.01"></path></svg></div><span class="app-icon-label">Full Home Load</span></div>
+</div>
+</div>
+<div class="pkg-badges">
+<span class="pkg-badge"><svg fill="none" height="11" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" viewbox="0 0 24 24" width="11"><polyline points="20 6 9 17 4 12"></polyline></svg>Net Metering Ready</span>
+<span class="pkg-badge b-blue"><svg fill="none" height="11" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" viewbox="0 0 24 24" width="11"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>25-Year Lifespan</span>
+</div>
+</div>
+<div class="pkg-footer">
+<button class="btn-pkg-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get My <span style="letter-spacing:.04em">FREE</span> Quote <svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" viewbox="0 0 24 24" width="14"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></button>
+<button class="btn-pkg-secondary">Download Package Specs</button>
+<p class="pkg-card-custom-note">Fully customizable based on site assessment.</p>
+</div>
+</div>
+<!-- SUNBURST -->
+<div class="pkg-card" id="card-sunburst">
+<div class="pkg-header h-sunburst">
+<div class="pkg-package-name">Sunburst Package</div>
+<div class="pkg-tagline">Built for businesses that demand serious savings</div>
+<div class="pkg-fit">
+<svg fill="none" height="14" stroke="rgba(255,255,255,.65)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="17" rx="2" width="18" x="3" y="4"></rect><path d="M3 10h18"></path></svg>
+          Engineered for commercial properties, large homes, and industrial facilities with heavy daily power demands and high utility bills.
+        </div>
+</div>
+<div class="pkg-savings">
+<div class="savings-label">Estimated Monthly Savings</div>
+<div class="savings-amount">₱12,000 – ₱25,000+</div>
+<div class="savings-sub">based on high-load commercial and industrial usage</div>
+</div>
+<div class="pkg-body">
+<div class="pkg-spec-row">
+<span class="pkg-spec-label"><svg fill="none" height="14" stroke="var(--muted)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="14"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>System Size</span>
+<span class="pkg-spec-value">25.2 kWp</span>
+</div>
+<div class="pkg-spec-row">
+<span class="pkg-spec-label"><svg fill="none" height="14" stroke="var(--muted)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="7" width="7" x="3" y="3"></rect><rect height="7" width="7" x="14" y="3"></rect><rect height="7" width="7" x="3" y="14"></rect><path d="M14 17h7M17 14v7"></path></svg>Solar Panels</span>
+<span class="pkg-spec-value">60 Panels</span>
+</div>
+<div class="pkg-spec-row">
+<span class="pkg-spec-label"><svg fill="none" height="14" stroke="var(--muted)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="14"><circle cx="12" cy="12" r="5"></circle><line x1="12" x2="12" y1="1" y2="3"></line><line x1="12" x2="12" y1="21" y2="23"></line><line x1="4.22" x2="5.64" y1="4.22" y2="5.64"></line><line x1="18.36" x2="19.78" y1="18.36" y2="19.78"></line><line x1="1" x2="3" y1="12" y2="12"></line><line x1="21" x2="23" y1="12" y2="12"></line></svg>Est. Monthly Generation</span>
+<span class="pkg-spec-value">~2,520 kWh</span>
+</div>
+<div class="pkg-spec-row">
+<span class="pkg-spec-label"><svg fill="none" height="14" stroke="var(--muted)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="14"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>Power Capacity</span>
+<span class="pkg-spec-value">5+ Aircons + Full Operations</span>
+</div>
+<div class="pkg-spec-row">
+<span class="pkg-spec-label"><svg fill="none" height="14" stroke="var(--muted)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="13" rx="2" width="22" x="1" y="6"></rect><path d="M23 13H1"></path></svg>Best For</span>
+<span class="pkg-spec-value">Bills ₱20,000+/mo</span>
+</div>
+<div class="pkg-appliances">
+<div class="pkg-app-label">Can comfortably power</div>
+<div class="pkg-app-icons">
+<div class="app-icon-item"><div class="app-icon-circle"><svg fill="none" height="20" stroke="#0EA5E9" stroke-linecap="round" stroke-width="1.75" viewbox="0 0 24 24" width="20"><rect height="13" rx="2" width="18" x="3" y="3"></rect><path d="M7 20h10M10 17v3M14 17v3"></path></svg></div><span class="app-icon-label">5+ Aircons</span></div>
+<div class="app-icon-item"><div class="app-icon-circle"><svg fill="none" height="20" stroke="#10B981" stroke-linecap="round" stroke-width="1.75" viewbox="0 0 24 24" width="20"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg></div><span class="app-icon-label">Heavy Equipment</span></div>
+<div class="app-icon-item"><div class="app-icon-circle"><svg fill="none" height="20" stroke="#F59E0B" stroke-linecap="round" stroke-width="1.75" viewbox="0 0 24 24" width="20"><rect height="17" rx="2" width="18" x="3" y="4"></rect><path d="M3 10h18"></path></svg></div><span class="app-icon-label">Full Office / Shop</span></div>
+<div class="app-icon-item"><div class="app-icon-circle"><svg fill="none" height="20" stroke="#8B5CF6" stroke-linecap="round" stroke-width="1.75" viewbox="0 0 24 24" width="20"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div><span class="app-icon-label">Full Operations</span></div>
+</div>
+</div>
+<div class="pkg-badges">
+<span class="pkg-badge"><svg fill="none" height="11" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" viewbox="0 0 24 24" width="11"><polyline points="20 6 9 17 4 12"></polyline></svg>Net Metering Ready</span>
+<span class="pkg-badge b-blue"><svg fill="none" height="11" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" viewbox="0 0 24 24" width="11"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>25-Year Lifespan</span>
+</div>
+</div>
+<div class="pkg-footer">
+<button class="btn-pkg-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get My <span style="letter-spacing:.04em">FREE</span> Quote <svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" viewbox="0 0 24 24" width="14"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></button>
+<button class="btn-pkg-secondary">Download Package Specs</button>
+</div>
+</div>
+</div>
+<p class="pkg-disclaimer">* Savings estimates are based on average Philippine electricity rates (₱9–₱11/kWh). Actual savings depend on system size, location, shading, orientation, and consumption patterns. JAC Solar provides a site-specific engineering assessment during your free consultation.</p>
+</section>
