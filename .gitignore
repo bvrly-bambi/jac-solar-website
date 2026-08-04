@@ -1,0 +1,45 @@
+# Real configuration and secrets
+config.php
+jac_quote_config.php
+.env
+.env.*
+!.env.example
+
+# Composer dependencies
+vendor/
+
+# Uploads and temporary files
+uploads/
+tmp/
+temp/
+
+# Logs
+*.log
+logs/
+
+# Database exports containing customer data
+*.sql.gz
+*.sql.bak
+database/exports/
+
+# Temporary test and debug scripts
+test_*.php
+debug_*.php
+phpinfo.php
+jac-*-test*.php
+jac-*-readiness-*.php
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+desktop.ini
+.Spotlight-V100
+.Trashes
+ehthumbs.db
