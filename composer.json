@@ -2,6 +2,7 @@
     "name": "jacsolarcorp/free-quote-v1",
     "description": "JAC Solar Free Quote V1 backend dependencies",
     "type": "project",
+    "license": "proprietary",
     "require": {
         "php": ">=8.1",
         "phpmailer/phpmailer": "^6.9"
