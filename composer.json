@@ -1,0 +1,18 @@
+{
+    "name": "jacsolarcorp/free-quote-v1",
+    "description": "JAC Solar Free Quote V1 backend dependencies",
+    "type": "project",
+    "require": {
+        "php": ">=8.1",
+        "phpmailer/phpmailer": "^6.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "JacSolar\\": "api/src/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}
