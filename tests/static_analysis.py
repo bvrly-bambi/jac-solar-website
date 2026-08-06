@@ -363,13 +363,20 @@ if email_php.is_file():
     )
 
 
-print("\n── Frontend untouched ──")
+print("\n── Backend/frontend separation ──")
 
-frontend = ["index.html", "styles/main.css", "privacy.html"]
-for name in frontend:
-    path = ROOT / name
-    if name == "privacy.html":
-        check("privacy.html not created in Phase 2", not path.exists())
+# Phase 2 must contain no frontend logic of its own. privacy.html is a
+# legitimate Phase 3 artifact, so its presence is no longer a failure here;
+# tests/frontend_static.py owns the frontend assertions.
+backend_php = [p for p in php_files()]
+check(
+    "no HTML form markup inside the backend",
+    not any("<form" in read(p) for p in backend_php),
+)
+check(
+    "no backend file references the frontend stylesheet",
+    not any("styles/main.css" in read(p) for p in backend_php),
+)
 
 components = ROOT / "components"
 check(
