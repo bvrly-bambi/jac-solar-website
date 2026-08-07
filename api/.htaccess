@@ -1,0 +1,22 @@
+# JAC Solar Free Quote V1 — api/ hardening
+
+<FilesMatch "^(?!csrf-token\.php$|submit-quote\.php$).+\.php$">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "\.(?:md|json|lock|log|sql)$">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "\.example\.php$">
+    Require all denied
+</FilesMatch>
+
+RedirectMatch 404 ^/.*/api/src/.*$
+
+Options -Indexes
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always unset X-Powered-By
+</IfModule>
