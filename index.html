@@ -1182,8 +1182,9 @@ document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
     var status = data && data.status;
 
     if (status === 'success') {
-      renderSuccess(data);
-      form.reset();
+    renderSuccess(data);
+    form.querySelector('button[type="submit"]').style.display = 'none';
+    form.reset();
       resetFileUi();
       clearFieldErrors();
       loadTokens();            // consumed on commit — fetch a fresh pair
@@ -1191,8 +1192,9 @@ document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
     }
 
     if (status === 'already_received') {
-      renderAlreadyReceived(data);
-      loadTokens();
+    renderAlreadyReceived(data);
+    form.querySelector('button[type="submit"]').style.display = 'none';
+    loadTokens();
       return;
     }
 
