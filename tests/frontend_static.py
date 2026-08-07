@@ -307,6 +307,10 @@ check("refreshes tokens after commit/csrf error",
 
 SUCCESS_TEXT = "Thank you! Your Free Quote request has been received."
 check("approved success wording present", SUCCESS_TEXT in normalized)
+check(
+    "submit button hidden after accepted or duplicate response",
+    index_html.count("submitBtn.hidden = true;") >= 2,
+)
 check("states one to two business days",
       "one to two business days" in normalized)
 check(
