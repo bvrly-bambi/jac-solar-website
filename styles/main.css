@@ -391,3 +391,66 @@ a{text-decoration:none;color:inherit}
   .why-row{grid-template-columns:60px 1fr;gap:1.25rem}
   .bill-finder{flex-direction:column;gap:.75rem;text-align:center}.bill-selector{width:100%}
 }
+
+/* ── Free Quote V1 — form integration ───────────────────────────────────── */
+
+/* Honeypot: kept out of sight and out of the tab order without display:none,
+   so that automated fillers still see it. */
+.hp-field{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+
+/* Inline field errors. Colour is never the only signal: each message is
+   prefixed with a warning glyph and the field also gets aria-invalid. */
+.field-error{display:none;font-size:11px;font-weight:600;color:var(--red);margin-top:.4rem;line-height:1.5}
+.field-error.visible{display:block}
+.field-error.visible::before{content:"\26A0";margin-right:.35rem;font-weight:700}
+.field-error-consent{margin-top:-.75rem;margin-bottom:1.1rem}
+
+.form-field input.has-error,.form-field select.has-error,.form-field textarea.has-error{border-color:var(--red);background:#FEF2F2}
+.form-field input.has-error:focus,.form-field select.has-error:focus,.form-field textarea.has-error:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(239,68,68,.15)}
+
+/* Bill-range guidance note */
+.range-note{font-size:11px;color:var(--muted);line-height:1.6;margin:-.35rem 0 1.1rem}
+
+/* Upload box states */
+.upload-box.has-file{border-color:var(--green);border-style:solid;background:#F0FDF4}
+.upload-box.has-error{border-color:var(--red);background:#FEF2F2}
+.upload-actions{display:none;align-items:center;flex-wrap:wrap;gap:.6rem;margin-top:.6rem}
+.upload-actions.visible{display:flex}
+.upload-remove{background:none;border:1.5px solid var(--border);border-radius:50px;color:var(--navy);cursor:pointer;font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;padding:6px 14px;transition:all .2s}
+.upload-remove:hover{border-color:var(--red);color:var(--red)}
+.upload-replace-hint{font-size:10.5px;color:var(--muted)}
+
+/* Privacy links */
+.privacy-link{color:var(--navy-light);font-weight:700;text-decoration:underline}
+.privacy-link:hover{color:var(--gold-dark)}
+
+/* Submission status. Each variant pairs its colour with a text label and a
+   glyph supplied by the script, so status is never colour-only. */
+.form-status{display:none;border-radius:var(--radius-sm);padding:1.1rem 1.25rem;margin-bottom:1.1rem;font-size:13.5px;line-height:1.7;border:1.5px solid var(--border);background:var(--gray)}
+.form-status.visible{display:block}
+.form-status strong{display:block;font-family:'Outfit',sans-serif;font-size:14.5px;font-weight:800;margin-bottom:.4rem}
+.form-status .status-line,.form-status .status-notice,.form-status .status-ref{margin:.45rem 0 0}
+.form-status .status-notice{font-size:12.5px;color:var(--muted)}
+.form-status .ref-code{font-family:'Outfit',sans-serif;font-weight:900;letter-spacing:.04em;background:var(--white);border:1.5px dashed currentColor;border-radius:6px;padding:2px 9px;display:inline-block;margin-top:2px}
+.form-status a{color:inherit;font-weight:700;text-decoration:underline}
+.form-status:focus{outline:none}
+.form-status:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+.form-status.status-success{border-color:var(--green);background:var(--green-light);color:#065F46}
+.form-status.status-info{border-color:var(--teal);background:var(--teal-light);color:#075985}
+.form-status.status-error{border-color:var(--red);background:#FEF2F2;color:#991B1B}
+
+/* Submit button states */
+.btn-submit:disabled{background:var(--border);color:var(--muted);cursor:not-allowed;transform:none;box-shadow:none}
+.btn-submit:disabled:hover{background:var(--border);transform:none;box-shadow:none}
+.btn-submit[aria-busy="true"]{cursor:progress}
+
+/* Visible keyboard focus across the form */
+#quoteForm input:focus-visible,#quoteForm select:focus-visible,#quoteForm textarea:focus-visible,#quoteForm button:focus-visible,#quoteForm a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.upload-box:focus-within{border-color:var(--gold);background:var(--gold-pale)}
+
+@media (max-width:600px){
+  .form-status{padding:1rem;font-size:13px}
+  .upload-actions{gap:.45rem}
+  .upload-replace-hint{flex-basis:100%}
+}

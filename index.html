@@ -693,56 +693,71 @@
 <div class="contact-inner fade-up">
 <div class="eyebrow" style="justify-content:center">Get in Touch</div>
 <h2 class="sec-title" style="text-align:center;font-size:28px">Request Your Free Solar Quotation</h2>
-<p style="font-size:14.5px;color:var(--muted);text-align:center;line-height:1.8;margin-bottom:1.75rem">Fill in the form and upload your latest electricity bill. We'll send your personalized quote by email — and schedule a site visit at your convenience.</p>
+<p style="font-size:14.5px;color:var(--muted);text-align:center;line-height:1.8;margin-bottom:1.75rem">Fill in the form and upload your latest electricity bill. We'll review your request and contact you within one to two business days about your quotation and next steps.</p>
 <div class="next-steps">
 <div class="next-step"><div class="next-step-num">01</div><div class="next-step-label">We Review Your Bill</div><div class="next-step-desc">We analyze your usage and compute an accurate estimate.</div></div>
-<div class="next-step"><div class="next-step-num">02</div><div class="next-step-label">Quote Sent to Email</div><div class="next-step-desc">Detailed, no-obligation quote within 24–48 hours.</div></div>
-<div class="next-step"><div class="next-step-num">03</div><div class="next-step-label">Site Visit Scheduled</div><div class="next-step-desc">Our engineer visits to finalize the system design.</div></div>
+<div class="next-step"><div class="next-step-num">02</div><div class="next-step-label">We Contact You</div><div class="next-step-desc">We normally respond within one to two business days with your quotation or any details we need.</div></div>
+<div class="next-step"><div class="next-step-num">03</div><div class="next-step-label">Site Visit, If Needed</div><div class="next-step-desc">We coordinate a convenient schedule when an onsite assessment is needed.</div></div>
+</div>
+<form action="api/submit-quote.php" enctype="multipart/form-data" id="quoteForm" method="post" novalidate="">
+<input id="csrfToken" name="csrf_token" type="hidden" value=""/>
+<input id="submissionToken" name="submission_token" type="hidden" value=""/>
+<div aria-hidden="true" class="hp-field">
+<label for="website">Leave this field empty</label>
+<input autocomplete="off" id="website" name="website" tabindex="-1" type="text"/>
 </div>
 <div class="form-row">
-<div class="form-field"><label>Full Name <span class="req">*</span></label><input placeholder="Juan dela Cruz" required="" type="text"/></div>
-<div class="form-field"><label>Contact Number <span class="req">*</span></label><input placeholder="+63 9XX XXX XXXX" required="" type="text"/></div>
+<div class="form-field"><label for="fullName">Full Name <span class="req">*</span></label><input aria-describedby="err-full_name" autocomplete="name" id="fullName" maxlength="100" name="full_name" placeholder="Juan dela Cruz" required="" type="text"/><p class="field-error" id="err-full_name"></p></div>
+<div class="form-field"><label for="contactNumber">Contact Number <span class="req">*</span></label><input aria-describedby="err-contact_number" autocomplete="tel" id="contactNumber" inputmode="tel" name="contact_number" placeholder="+63 9XX XXX XXXX" required="" type="text"/><p class="field-error" id="err-contact_number"></p></div>
 </div>
-<div class="form-field"><label>Email Address <span class="req">*</span></label><input placeholder="you@email.com" required="" type="email"/></div>
+<div class="form-field"><label for="emailAddress">Email Address <span class="req">*</span></label><input aria-describedby="err-email" autocomplete="email" id="emailAddress" maxlength="320" name="email" placeholder="you@email.com" required="" type="email"/><p class="field-error" id="err-email"></p></div>
 <div class="form-row">
-<div class="form-field"><label>Location / Province <span class="req">*</span></label><input placeholder="e.g. Laguna, Cebu, Davao" required="" type="text"/></div>
-<div class="form-field"><label>Electricity Provider <span class="req">*</span></label><input placeholder="e.g. Meralco, VECO, BENECO" required="" type="text"/></div>
+<div class="form-field"><label for="projectLocation">Location / Province <span class="req">*</span></label><input aria-describedby="err-project_location" id="projectLocation" maxlength="255" name="project_location" placeholder="e.g. Laguna, Cebu, Davao" required="" type="text"/><p class="field-error" id="err-project_location"></p></div>
+<div class="form-field"><label for="electricityProvider">Electricity Provider <span class="req">*</span></label><input aria-describedby="err-electricity_provider" id="electricityProvider" maxlength="150" name="electricity_provider" placeholder="e.g. Meralco, VECO, BENECO" required="" type="text"/><p class="field-error" id="err-electricity_provider"></p></div>
 </div>
 <div class="form-row">
-<div class="form-field"><label>Type of Property <span class="req">*</span></label>
-<select required=""><option value="">Select one...</option><option>Residential (Home)</option><option>Commercial / Business</option><option>Farm / Agricultural</option><option>School / Institution</option><option>Industrial</option></select>
+<div class="form-field"><label for="propertyType">Type of Property <span class="req">*</span></label>
+<select aria-describedby="err-property_type" id="propertyType" name="property_type" required=""><option value="">Select one...</option><option>Residential</option><option>Commercial / Industrial</option><option>Agricultural</option><option>School / Institution</option><option>Government</option><option>Other</option></select>
+<p class="field-error" id="err-property_type"></p>
 </div>
-<div class="form-field"><label>Average Monthly Bill (₱) <span class="req">*</span></label>
-<select required=""><option value="">Select range...</option><option>Below ₱3,000</option><option>₱3,000 – ₱8,000</option><option>₱8,000 – ₱20,000</option><option>₱20,000 – ₱50,000</option><option>Above ₱50,000</option></select>
+<div class="form-field"><label for="billRange">Average Monthly Bill (₱) <span class="req">*</span></label>
+<select aria-describedby="err-bill_range" id="billRange" name="bill_range" required=""><option value="">Select range...</option><option>Below ₱5,000</option><option>₱5,000–₱8,000</option><option>₱6,000–₱10,000</option><option>₱8,000–₱12,000</option><option>₱10,000–₱14,000</option><option>₱14,000–₱18,000</option><option>₱16,000–₱22,000</option><option>₱18,000–₱24,000</option><option>₱20,000–₱30,000</option><option>₱30,000 and above</option></select>
+<p class="field-error" id="err-bill_range"></p>
 </div>
 </div>
+<p class="range-note">Bill ranges guide our initial assessment. Bills above ₱30,000 may require a customized commercial or high-capacity system assessment. Final system sizing depends on bill review and, when needed, an onsite assessment.</p>
 <div class="form-field">
-<label>Upload Latest Electricity Bill <span class="req">*</span></label>
+<label for="billUpload">Upload Latest Electricity Bill <span class="req">*</span></label>
 <div class="upload-box" id="uploadBox">
-<input accept="image/*,.pdf" id="billUpload" onchange="handleUpload(this)" type="file"/>
+<input accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" aria-describedby="err-electricity_bill" id="billUpload" name="electricity_bill" required="" type="file"/>
 <div class="upload-icon"><svg fill="none" height="18" stroke="#D97706" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" x2="12" y1="3" y2="15"></line></svg></div>
 <div class="upload-title">Click to upload your electricity bill</div>
-<div class="upload-sub">Photo or PDF accepted · Max 10MB</div>
+<div class="upload-sub">PDF, JPG, or PNG · Max 10MB · One file</div>
 <div class="upload-why">Helps us give you an accurate quote — not a rough guess.</div>
 <div class="upload-filename" id="uploadFilename"></div>
 </div>
+<div class="upload-actions" id="uploadActions"><button class="upload-remove" id="removeFileBtn" type="button">Remove file</button><span class="upload-replace-hint">or click the box above to choose a different file</span></div>
+<p class="field-error" id="err-electricity_bill"></p>
 </div>
-<div class="form-field"><label>Anything else we should know <span class="opt">(optional)</span></label><textarea placeholder="e.g. Gusto ko mabawasan ang Meralco bill, interested sa solar irrigation, may existing system na kailangan ng maintenance..."></textarea></div>
-<div class="form-field"><label>Specific Requirements <span class="opt">(optional — helps us customize your quote)</span></label><textarea placeholder="e.g. I have a concrete flat roof, 4 aircon units, budget around ₱300k, interested in battery backup, or specific appliances you want covered..." style="min-height:70px"></textarea></div>
-<label class="consent-row">
-<input required="" type="checkbox"/>
-<span class="consent-text"><strong>I confirm that I am a property owner or authorized representative</strong> making a genuine inquiry for solar installation or services — not a competitor or automated submission.</span>
+<div class="form-field"><label for="messageField">Anything else we should know <span class="opt">(optional)</span></label><textarea aria-describedby="err-message" id="messageField" maxlength="2000" name="message" placeholder="e.g. Gusto ko mabawasan ang Meralco bill, interested sa solar irrigation, may existing system na kailangan ng maintenance..."></textarea><p class="field-error" id="err-message"></p></div>
+<div class="form-field"><label for="specificRequirements">Specific Requirements <span class="opt">(optional — helps us customize your quote)</span></label><textarea aria-describedby="err-specific_requirements" id="specificRequirements" maxlength="2000" name="specific_requirements" placeholder="e.g. I have a concrete flat roof, 4 aircon units, budget around ₱300k, interested in battery backup, or specific appliances you want covered..." style="min-height:70px"></textarea><p class="field-error" id="err-specific_requirements"></p></div>
+<label class="consent-row" for="processingConsent">
+<input aria-describedby="err-processing_consent" id="processingConsent" name="processing_consent" required="" type="checkbox" value="1"/>
+<span class="consent-text">I consent to JAC Solar Corporation collecting and using the information and electricity bill I provide to assess my solar requirements, respond to my inquiry, and prepare a quotation. <a class="privacy-link" href="privacy.html" target="_blank" rel="noopener">Read our Privacy Notice</a></span>
 </label>
-<label class="optin-row">
-<input checked="" type="checkbox"/>
-<span class="optin-text">Yes, I'd like to receive <strong>solar tips, promos, and company updates</strong> from JAC Solar by email. Unsubscribe anytime.</span>
+<p class="field-error field-error-consent" id="err-processing_consent"></p>
+<label class="optin-row" for="marketingConsent">
+<input id="marketingConsent" name="marketing_consent" type="checkbox" value="1"/>
+<span class="optin-text">I would like to receive solar tips, promotions, and company updates from JAC Solar Corporation.</span>
 </label>
-<p class="form-note">Your information is kept private and used only to process your inquiry. We do not share your data with third parties.</p>
+<p class="form-note">We use your details and uploaded bill to assess your solar requirements, respond to your inquiry, and prepare your quotation. Your information is processed using JAC Solar's hosting and email service providers, is accessible only to authorized JAC Solar personnel, and is protected by security safeguards. See our <a class="privacy-link" href="privacy.html" target="_blank" rel="noopener">Privacy Notice</a> for details.</p>
 <div class="trust-submit-label">
 <span class="trust-submit-badge"><svg fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" viewbox="0 0 24 24" width="13"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>100% Free Site Assessment &amp; Quotation — No commitment required.</span>
 </div>
-<button class="btn-submit">Send My FREE Quotation Request <svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" viewbox="0 0 24 24" width="16"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></button>
-<p class="form-resp-note">We usually respond within 24–48 hours. A site visit will be arranged after your quote is reviewed.</p>
+<div aria-live="polite" class="form-status" id="formStatus" role="status" tabindex="-1"></div>
+<button class="btn-submit" disabled="" id="submitBtn" type="submit">Send My FREE Quotation Request <svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" viewbox="0 0 24 24" width="16"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></button>
+<p class="form-resp-note">We normally respond within one to two business days. We will coordinate a site visit if an onsite assessment is needed.</p>
+</form>
 </div>
 </section>
 <footer class="footer">
@@ -769,20 +784,522 @@ function highlightPackage(pkg){
   };
   hint.textContent=hints[pkg]||'';
 }
-function handleUpload(input){
-  const fn=document.getElementById('uploadFilename');
-  const box=document.getElementById('uploadBox');
-  if(input.files&&input.files[0]){
-    fn.textContent='✓ '+input.files[0].name;
-    fn.style.display='block';
-    box.style.borderColor='#10B981';
-    box.style.background='#F0FDF4';
-  }
-}
 const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
 },{threshold:0.08});
 document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+<script>
+/* ── JAC Solar Free Quote V1 — form integration ─────────────────────────────
+   Talks to the Phase 2 PHP backend:
+     GET  api/csrf-token.php   -> { status, csrf_token, submission_token }
+     POST api/submit-quote.php -> { status, ... }  (multipart/form-data)
+   The backend is authoritative. Everything below is convenience validation
+   and presentation only.
+--------------------------------------------------------------------------- */
+(function () {
+  'use strict';
+
+  var TOKEN_URL  = 'api/csrf-token.php';
+  var SUBMIT_URL = 'api/submit-quote.php';
+  var MAX_BYTES  = 10 * 1024 * 1024;
+
+  var PROPERTY_TYPES = [
+    'Residential', 'Commercial / Industrial', 'Agricultural',
+    'School / Institution', 'Government', 'Other'
+  ];
+
+  var BILL_RANGES = [
+    'Below \u20B15,000', '\u20B15,000\u2013\u20B18,000', '\u20B16,000\u2013\u20B110,000',
+    '\u20B18,000\u2013\u20B112,000', '\u20B110,000\u2013\u20B114,000', '\u20B114,000\u2013\u20B118,000',
+    '\u20B116,000\u2013\u20B122,000', '\u20B118,000\u2013\u20B124,000', '\u20B120,000\u2013\u20B130,000',
+    '\u20B130,000 and above'
+  ];
+
+  var ALLOWED_TYPES = ['application/pdf', 'image/jpeg', 'image/png'];
+  var ALLOWED_EXT   = ['pdf', 'jpg', 'jpeg', 'png'];
+
+  var form = document.getElementById('quoteForm');
+  if (!form) { return; }
+
+  var submitBtn     = document.getElementById('submitBtn');
+  var statusBox     = document.getElementById('formStatus');
+  var csrfInput     = document.getElementById('csrfToken');
+  var tokenInput    = document.getElementById('submissionToken');
+  var fileInput     = document.getElementById('billUpload');
+  var uploadBox     = document.getElementById('uploadBox');
+  var uploadName    = document.getElementById('uploadFilename');
+  var uploadActions = document.getElementById('uploadActions');
+  var removeBtn     = document.getElementById('removeFileBtn');
+
+  var submitting  = false;
+  var tokensReady = false;
+  var buttonLabel = submitBtn ? submitBtn.innerHTML : '';
+
+  // ── Helpers ───────────────────────────────────────────────────────────────
+
+  function byName(name) {
+    return form.querySelector('[name="' + name + '"]');
+  }
+
+  function errorNode(name) {
+    return document.getElementById('err-' + name);
+  }
+
+  function setFieldError(name, message) {
+    var node  = errorNode(name);
+    var field = byName(name);
+    if (node) {
+      node.textContent = message || '';
+      node.classList.toggle('visible', Boolean(message));
+    }
+    if (field) {
+      if (message) {
+        field.classList.add('has-error');
+        field.setAttribute('aria-invalid', 'true');
+      } else {
+        field.classList.remove('has-error');
+        field.removeAttribute('aria-invalid');
+      }
+    }
+  }
+
+  function clearFieldErrors() {
+    var nodes = form.querySelectorAll('.field-error');
+    for (var i = 0; i < nodes.length; i++) {
+      nodes[i].textContent = '';
+      nodes[i].classList.remove('visible');
+    }
+    var flagged = form.querySelectorAll('.has-error');
+    for (var j = 0; j < flagged.length; j++) {
+      flagged[j].classList.remove('has-error');
+      flagged[j].removeAttribute('aria-invalid');
+    }
+  }
+
+  /* Status messages never rely on colour alone: each carries a text prefix
+     and an icon glyph. */
+  function showStatus(kind, html) {
+    if (!statusBox) { return; }
+    statusBox.className = 'form-status visible status-' + kind;
+    statusBox.innerHTML = html;
+    statusBox.hidden = false;
+    if (typeof statusBox.focus === 'function') {
+      statusBox.focus();
+    }
+    if (typeof statusBox.scrollIntoView === 'function') {
+      statusBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  function clearStatus() {
+    if (!statusBox) { return; }
+    statusBox.className = 'form-status';
+    statusBox.innerHTML = '';
+    statusBox.hidden = true;
+  }
+
+  function escapeHtml(value) {
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  function humanBytes(bytes) {
+    if (bytes >= 1048576) { return (bytes / 1048576).toFixed(2) + ' MB'; }
+    if (bytes >= 1024) { return Math.round(bytes / 1024) + ' KB'; }
+    return bytes + ' B';
+  }
+
+  function setBusy(isBusy) {
+    submitting = isBusy;
+    if (!submitBtn) { return; }
+    submitBtn.disabled = isBusy || !tokensReady;
+    submitBtn.setAttribute('aria-busy', isBusy ? 'true' : 'false');
+    submitBtn.innerHTML = isBusy ? 'Sending your request\u2026' : buttonLabel;
+  }
+
+  // ── Token loading ─────────────────────────────────────────────────────────
+
+  function loadTokens() {
+    // Retire any previous client-side token state immediately. This prevents a
+    // brief re-submit window after success, replay, or CSRF recovery while the
+    // replacement token pair is still in flight.
+    tokensReady = false;
+    if (csrfInput) { csrfInput.value = ''; }
+    if (tokenInput) { tokenInput.value = ''; }
+    if (submitBtn) { submitBtn.disabled = true; }
+
+    return fetch(TOKEN_URL, {
+      method: 'GET',
+      credentials: 'same-origin',
+      cache: 'no-store',
+      headers: { 'Accept': 'application/json' }
+    })
+      .then(function (response) { return response.json(); })
+      .then(function (data) {
+        if (!data || data.status !== 'success' || !data.csrf_token || !data.submission_token) {
+          throw new Error('token response incomplete');
+        }
+        csrfInput.value  = data.csrf_token;
+        tokenInput.value = data.submission_token;
+        tokensReady = true;
+        if (submitBtn) { submitBtn.disabled = false; }
+        return true;
+      })
+      .catch(function () {
+        tokensReady = false;
+        if (submitBtn) { submitBtn.disabled = true; }
+        showStatus('error',
+          '<strong>\u26A0 Form unavailable.</strong> We could not prepare the form securely. ' +
+          'Please refresh the page. If this keeps happening, email us at ' +
+          '<a href="mailto:chris@jacsolarcorp.com">chris@jacsolarcorp.com</a>.');
+        return false;
+      });
+  }
+
+  // ── File selection ────────────────────────────────────────────────────────
+
+  function describeFileProblem(file) {
+    var name = (file.name || '').toLowerCase();
+    var dot  = name.lastIndexOf('.');
+    var ext  = dot === -1 ? '' : name.slice(dot + 1);
+    var typeOk = file.type ? ALLOWED_TYPES.indexOf(file.type) !== -1 : true;
+    var extOk  = ALLOWED_EXT.indexOf(ext) !== -1;
+
+    if (!extOk || !typeOk) {
+      return 'Only PDF, JPG, or PNG files are accepted. Please choose a different file.';
+    }
+    if (file.size <= 0) {
+      return 'That file appears to be empty. Please choose your latest electricity bill.';
+    }
+    if (file.size > MAX_BYTES) {
+      return 'That file is ' + humanBytes(file.size) + '. The maximum size is 10 MB.';
+    }
+    return '';
+  }
+
+  function resetFileUi() {
+    if (uploadName) {
+      uploadName.textContent = '';
+      uploadName.style.display = 'none';
+    }
+    if (uploadActions) { uploadActions.classList.remove('visible'); }
+    if (uploadBox) { uploadBox.classList.remove('has-file', 'has-error'); }
+  }
+
+  function handleFileChange() {
+    setFieldError('electricity_bill', '');
+    resetFileUi();
+
+    if (!fileInput.files || !fileInput.files.length) { return; }
+
+    if (fileInput.files.length > 1) {
+      setFieldError('electricity_bill', 'Please attach one file only.');
+      fileInput.value = '';
+      return;
+    }
+
+    var file = fileInput.files[0];
+    var problem = describeFileProblem(file);
+
+    if (problem) {
+      setFieldError('electricity_bill', problem);
+      if (uploadBox) { uploadBox.classList.add('has-error'); }
+      fileInput.value = '';
+      return;
+    }
+
+    if (uploadName) {
+      uploadName.textContent = '\u2713 ' + file.name + ' \u00B7 ' + humanBytes(file.size);
+      uploadName.style.display = 'block';
+    }
+    if (uploadBox) { uploadBox.classList.add('has-file'); }
+    if (uploadActions) { uploadActions.classList.add('visible'); }
+  }
+
+  if (fileInput) {
+    fileInput.addEventListener('change', handleFileChange);
+  }
+
+  if (removeBtn) {
+    removeBtn.addEventListener('click', function () {
+      fileInput.value = '';
+      resetFileUi();
+      setFieldError('electricity_bill', '');
+      fileInput.focus();
+    });
+  }
+
+  // ── Client-side validation (backend remains authoritative) ────────────────
+
+  function normalizeChoice(value) {
+    return String(value || '')
+      .replace(/[\u2014\u2212-]/g, '\u2013')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function looksLikePhNumber(raw) {
+    var digits = String(raw || '').replace(/\D+/g, '');
+    if (!digits) { return false; }
+    if (digits.indexOf('0063') === 0) { digits = digits.slice(2); }
+
+    var national;
+    if (digits.indexOf('63') === 0) { national = digits.slice(2); }
+    else if (digits.indexOf('0') === 0) { national = digits.slice(1); }
+    else if (digits.length === 10 && digits.indexOf('9') === 0) { national = digits; }
+    else { return false; }
+
+    if (national.length === 10 && national.indexOf('9') === 0) { return true; }
+    return national.length >= 8 && national.length <= 10 &&
+           national.indexOf('0') !== 0 && national.indexOf('9') !== 0;
+  }
+
+  function validate() {
+    clearFieldErrors();
+    var errors = [];
+
+    function fail(name, message) {
+      setFieldError(name, message);
+      errors.push(name);
+    }
+
+    var fullName = byName('full_name').value.replace(/\s+/g, ' ').trim();
+    if (fullName.length < 2 || fullName.length > 100) {
+      fail('full_name', 'Please enter your full name (2\u2013100 characters).');
+    }
+
+    if (!looksLikePhNumber(byName('contact_number').value)) {
+      fail('contact_number', 'Enter a Philippine number, e.g. 0917 123 4567 or +63 917 123 4567.');
+    }
+
+    var email = byName('email').value.trim();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      fail('email', 'Please enter a valid email address.');
+    }
+
+    var location = byName('project_location').value.trim();
+    if (!location) { fail('project_location', 'Please enter the project location.'); }
+    else if (location.length > 255) { fail('project_location', 'Maximum 255 characters.'); }
+
+    var provider = byName('electricity_provider').value.trim();
+    if (!provider) { fail('electricity_provider', 'Please enter your electricity provider.'); }
+    else if (provider.length > 150) { fail('electricity_provider', 'Maximum 150 characters.'); }
+
+    if (PROPERTY_TYPES.indexOf(normalizeChoice(byName('property_type').value)) === -1) {
+      fail('property_type', 'Please choose a property type.');
+    }
+
+    if (BILL_RANGES.indexOf(normalizeChoice(byName('bill_range').value)) === -1) {
+      fail('bill_range', 'Please choose your monthly bill range.');
+    }
+
+    if (byName('message').value.length > 2000) {
+      fail('message', 'Maximum 2,000 characters.');
+    }
+
+    if (byName('specific_requirements').value.length > 2000) {
+      fail('specific_requirements', 'Maximum 2,000 characters.');
+    }
+
+    if (!fileInput.files || !fileInput.files.length) {
+      fail('electricity_bill', 'Please attach your latest electricity bill.');
+    } else if (fileInput.files.length > 1) {
+      fail('electricity_bill', 'Please attach one file only.');
+    } else {
+      var problem = describeFileProblem(fileInput.files[0]);
+      if (problem) { fail('electricity_bill', problem); }
+    }
+
+    if (!byName('processing_consent').checked) {
+      fail('processing_consent',
+        'Please give consent so we can process your details and prepare your quotation.');
+    }
+
+    return errors;
+  }
+
+  function focusFirstError(names) {
+    if (!names.length) { return; }
+    var first = byName(names[0]);
+    if (first && typeof first.focus === 'function') {
+      first.focus();
+      if (typeof first.scrollIntoView === 'function') {
+        first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }
+
+  // ── Response handling ─────────────────────────────────────────────────────
+
+  function applyServerFieldErrors(errors) {
+    var mapped = [];
+    if (!errors || typeof errors !== 'object' || Array.isArray(errors)) { return mapped; }
+
+    Object.keys(errors).forEach(function (key) {
+      if (key === '_') { return; }
+      if (errorNode(key)) {
+        setFieldError(key, errors[key]);
+        mapped.push(key);
+      }
+    });
+    return mapped;
+  }
+
+  function renderSuccess(data) {
+    if (submitBtn) { submitBtn.hidden = true; }
+    var notice = data.notice
+      ? '<p class="status-notice">' + escapeHtml(data.notice) + '</p>'
+      : '<p class="status-line">A confirmation email is on its way to the address you provided.</p>';
+
+    showStatus('success',
+      '<strong>\u2713 Thank you! Your Free Quote request has been received.</strong>' +
+      '<p class="status-ref">Reference number: <span class="ref-code">' +
+      escapeHtml(data.reference_number) + '</span></p>' +
+      notice +
+      '<p class="status-line">JAC Solar normally responds within one to two business days.</p>');
+  }
+
+  function renderAlreadyReceived(data) {
+    if (submitBtn) { submitBtn.hidden = true; }
+    showStatus('info',
+      '<strong>\u2139 We already have this request.</strong>' +
+      '<p class="status-line">' + escapeHtml(data.message ||
+        'This request was already received, so we have not created a duplicate.') + '</p>' +
+      '<p class="status-ref">Reference number: <span class="ref-code">' +
+      escapeHtml(data.reference_number) + '</span></p>' +
+      '<p class="status-line">No further action is needed \u2014 your original request is already recorded.</p>');
+  }
+
+  /* chris@jacsolarcorp.com is offered only when the request was NOT saved. */
+  function contactFallback() {
+    return '<p class="status-line">If this continues, email us directly at ' +
+           '<a href="mailto:chris@jacsolarcorp.com">chris@jacsolarcorp.com</a>.</p>';
+  }
+
+  function handleResponse(data) {
+    var status = data && data.status;
+
+    if (status === 'success') {
+      renderSuccess(data);
+      form.reset();
+      resetFileUi();
+      clearFieldErrors();
+      loadTokens();            // consumed on commit — fetch a fresh pair
+      return;
+    }
+
+    if (status === 'already_received') {
+      renderAlreadyReceived(data);
+      loadTokens();
+      return;
+    }
+
+    if (status === 'validation_error' || status === 'upload_error') {
+      var mapped = applyServerFieldErrors(data.errors);
+      showStatus('error',
+        '<strong>\u26A0 ' + escapeHtml(data.message || 'Please review your details.') + '</strong>');
+      focusFirstError(mapped);
+      return;
+    }
+
+    if (status === 'csrf_error') {
+      showStatus('error',
+        '<strong>\u26A0 ' + escapeHtml(data.message ||
+          'Your session expired. Please refresh the page and try again.') + '</strong>' +
+        '<p class="status-line">Your details are still filled in \u2014 we are refreshing your session now.</p>');
+      loadTokens();
+      return;
+    }
+
+    if (status === 'rate_limited') {
+      var minutes = data.retry_after_seconds
+        ? Math.max(1, Math.ceil(data.retry_after_seconds / 60))
+        : null;
+      showStatus('error',
+        '<strong>\u26A0 ' + escapeHtml(data.message ||
+          'Too many submissions from this connection.') + '</strong>' +
+        (minutes ? '<p class="status-line">Please try again in about ' + minutes +
+          ' minute' + (minutes === 1 ? '' : 's') + '.</p>' : '') +
+        contactFallback());
+      return;
+    }
+
+    showStatus('error',
+      '<strong>\u26A0 ' + escapeHtml(data && data.message
+        ? data.message
+        : 'We could not process your request right now. Please try again shortly.') + '</strong>' +
+      contactFallback());
+  }
+
+  // ── Submission ────────────────────────────────────────────────────────────
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    if (submitting) { return; }
+
+    if (!tokensReady) {
+      showStatus('error',
+        '<strong>\u26A0 Please wait.</strong>' +
+        '<p class="status-line">The form is still preparing. Refresh the page if this persists.</p>');
+      return;
+    }
+
+    clearStatus();
+    var errors = validate();
+
+    if (errors.length) {
+      showStatus('error',
+        '<strong>\u26A0 Please review the highlighted fields.</strong>' +
+        '<p class="status-line">' + errors.length + ' field' +
+        (errors.length === 1 ? ' needs' : 's need') + ' your attention.</p>');
+      focusFirstError(errors);
+      return;
+    }
+
+    setBusy(true);
+
+    // FormData sets the multipart boundary itself; never set Content-Type here.
+    fetch(SUBMIT_URL, {
+      method: 'POST',
+      credentials: 'same-origin',
+      cache: 'no-store',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    })
+      .then(function (response) {
+        return response.json().catch(function () {
+          return { status: 'server_error' };
+        });
+      })
+      .then(handleResponse)
+      .catch(function () {
+        showStatus('error',
+          '<strong>\u26A0 Connection problem.</strong>' +
+          '<p class="status-line">We could not confirm whether your request reached our server. ' +
+          'Please try again once using the same form. If it was already received, duplicate ' +
+          'protection will return the original reference number instead of creating another request.</p>' +
+          contactFallback());
+      })
+      .then(function () { setBusy(false); });
+  });
+
+  // Clear a field's error as soon as the visitor starts correcting it.
+  ['full_name', 'contact_number', 'email', 'project_location',
+   'electricity_provider', 'property_type', 'bill_range',
+   'message', 'specific_requirements', 'processing_consent'
+  ].forEach(function (name) {
+    var field = byName(name);
+    if (!field) { return; }
+    var evt = (field.tagName === 'SELECT' || field.type === 'checkbox') ? 'change' : 'input';
+    field.addEventListener(evt, function () { setFieldError(name, ''); });
+  });
+
+  clearStatus();
+  loadTokens();
+})();
 </script>
 </body>
 </html>
