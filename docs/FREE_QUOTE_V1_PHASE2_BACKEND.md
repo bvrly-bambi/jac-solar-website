@@ -118,12 +118,15 @@ Below ₱5,000
 ₱16,000–₱22,000
 ₱18,000–₱24,000
 ₱20,000–₱30,000
+₱30,000 and above
 ```
 
 The peso sign and **en dash** (`–`, U+2013) are significant. The server folds
 hyphen, em dash and minus sign to en dash and collapses whitespace before
 matching, so a plain hyphen from the frontend is accepted — but the value must
 otherwise match exactly. Anything outside the list is rejected.
+
+`₱30,000 and above` is a customized-assessment category for higher-consumption inquiries. It does not guarantee a package match.
 
 ---
 

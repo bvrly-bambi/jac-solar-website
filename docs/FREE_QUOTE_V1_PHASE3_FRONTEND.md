@@ -80,7 +80,9 @@ Property types: `Residential`, `Commercial / Industrial`, `Agricultural`,
 
 Bill ranges: `Below ₱5,000`, `₱5,000–₱8,000`, `₱6,000–₱10,000`,
 `₱8,000–₱12,000`, `₱10,000–₱14,000`, `₱14,000–₱18,000`, `₱16,000–₱22,000`,
-`₱18,000–₱24,000`, `₱20,000–₱30,000`.
+`₱18,000–₱24,000`, `₱20,000–₱30,000`, `₱30,000 and above`.
+
+`₱30,000 and above` is a customized-assessment category for higher-consumption inquiries and is not a guaranteed package match.
 
 The **en dash** (`–`, U+2013) is significant. The backend folds hyphen, em
 dash, and minus sign to en dash before matching, but the markup uses the exact

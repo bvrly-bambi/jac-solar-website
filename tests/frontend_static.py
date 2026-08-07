@@ -243,6 +243,7 @@ BILL_RANGES = [
     "\u20b18,000\u2013\u20b112,000", "\u20b110,000\u2013\u20b114,000",
     "\u20b114,000\u2013\u20b118,000", "\u20b116,000\u2013\u20b122,000",
     "\u20b118,000\u2013\u20b124,000", "\u20b120,000\u2013\u20b130,000",
+    "\u20b130,000 and above",
 ]
 
 property_options = parser.select_options.get("property_type", [])
@@ -259,10 +260,12 @@ for value in BILL_RANGES:
 check("no unapproved bill ranges",
       sorted(v for v in bill_options if v) == sorted(BILL_RANGES),
       str([v for v in bill_options if v and v not in BILL_RANGES]))
-check("bill ranges use en dash, not hyphen",
-      all("\u2013" in v or v.startswith("Below") for v in bill_options if v))
+check("bill ranges use approved punctuation",
+      all("\u2013" in v or v.startswith("Below") or v.endswith("and above") for v in bill_options if v))
 check("bill ranges framed as assessment guides, not guarantees",
       "guide our initial assessment" in normalized)
+check("above-30k custom assessment note present",
+      "Bills above ₱30,000 may require a customized commercial or high-capacity system assessment." in normalized)
 
 
 print("\n── API integration ──")

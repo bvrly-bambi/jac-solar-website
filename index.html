@@ -721,11 +721,11 @@
 <p class="field-error" id="err-property_type"></p>
 </div>
 <div class="form-field"><label for="billRange">Average Monthly Bill (₱) <span class="req">*</span></label>
-<select aria-describedby="err-bill_range" id="billRange" name="bill_range" required=""><option value="">Select range...</option><option>Below ₱5,000</option><option>₱5,000–₱8,000</option><option>₱6,000–₱10,000</option><option>₱8,000–₱12,000</option><option>₱10,000–₱14,000</option><option>₱14,000–₱18,000</option><option>₱16,000–₱22,000</option><option>₱18,000–₱24,000</option><option>₱20,000–₱30,000</option></select>
+<select aria-describedby="err-bill_range" id="billRange" name="bill_range" required=""><option value="">Select range...</option><option>Below ₱5,000</option><option>₱5,000–₱8,000</option><option>₱6,000–₱10,000</option><option>₱8,000–₱12,000</option><option>₱10,000–₱14,000</option><option>₱14,000–₱18,000</option><option>₱16,000–₱22,000</option><option>₱18,000–₱24,000</option><option>₱20,000–₱30,000</option><option>₱30,000 and above</option></select>
 <p class="field-error" id="err-bill_range"></p>
 </div>
 </div>
-<p class="range-note">Bill ranges guide our initial assessment. Your final system size is confirmed after we review your bill and complete a site visit.</p>
+<p class="range-note">Bill ranges guide our initial assessment. Bills above ₱30,000 may require a customized commercial or high-capacity system assessment. Final system sizing depends on bill review and, when needed, an onsite assessment.</p>
 <div class="form-field">
 <label for="billUpload">Upload Latest Electricity Bill <span class="req">*</span></label>
 <div class="upload-box" id="uploadBox">
@@ -812,7 +812,8 @@ document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
   var BILL_RANGES = [
     'Below \u20B15,000', '\u20B15,000\u2013\u20B18,000', '\u20B16,000\u2013\u20B110,000',
     '\u20B18,000\u2013\u20B112,000', '\u20B110,000\u2013\u20B114,000', '\u20B114,000\u2013\u20B118,000',
-    '\u20B116,000\u2013\u20B122,000', '\u20B118,000\u2013\u20B124,000', '\u20B120,000\u2013\u20B130,000'
+    '\u20B116,000\u2013\u20B122,000', '\u20B118,000\u2013\u20B124,000', '\u20B120,000\u2013\u20B130,000',
+    '\u20B130,000 and above'
   ];
 
   var ALLOWED_TYPES = ['application/pdf', 'image/jpeg', 'image/png'];

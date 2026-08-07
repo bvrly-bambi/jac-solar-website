@@ -35,6 +35,7 @@ final class Validator
         '₱16,000–₱22,000',
         '₱18,000–₱24,000',
         '₱20,000–₱30,000',
+        '₱30,000 and above',
     ];
 
     /** Honeypot field name. Must remain empty. */

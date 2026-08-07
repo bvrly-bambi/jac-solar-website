@@ -81,10 +81,11 @@ check(
 echo "\n── Allowlist contents ──\n";
 
 check('6 property types', count(Validator::PROPERTY_TYPES) === 6);
-check('9 bill ranges', count(Validator::BILL_RANGES) === 9);
+check('10 bill ranges', count(Validator::BILL_RANGES) === 10);
 check('Government present', in_array('Government', Validator::PROPERTY_TYPES, true));
 check('Other present', in_array('Other', Validator::PROPERTY_TYPES, true));
 check('Below ₱5,000 present', in_array('Below ₱5,000', Validator::BILL_RANGES, true));
+check('₱30,000 and above present', in_array('₱30,000 and above', Validator::BILL_RANGES, true));
 
 echo "\n── Field validation ──\n";
 
@@ -123,6 +124,9 @@ check('long name fails', !$v->validate(array_merge($valid, ['full_name' => str_r
 
 $v = new Validator();
 check('unapproved property type fails', !$v->validate(array_merge($valid, ['property_type' => 'Warehouse'])));
+
+$v = new Validator();
+check('above-30k bill range passes', $v->validate(array_merge($valid, ['bill_range' => '₱30,000 and above'])));
 
 $v = new Validator();
 check('unapproved bill range fails', !$v->validate(array_merge($valid, ['bill_range' => '₱1,000,000'])));
