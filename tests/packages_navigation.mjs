@@ -14,6 +14,17 @@ const packageNames = [
   'Sunforge 20 HB',
   'Sunforge 24 HB',
 ];
+const packageIds = [
+  'sunrise-3',
+  'sunbeam-6',
+  'sunburst-8',
+  'sunflare-10',
+  'suncrest-12',
+  'sunforge-16',
+  'sunforge-18',
+  'sunforge-20',
+  'sunforge-24',
+];
 const packageRanges = [
   'Below ₱5,000',
   '₱5,000–₱8,000',
@@ -77,14 +88,25 @@ function packageUiFrom(html, file) {
       label,
       setAttribute: (name, value) => attributes.set(name, value),
       removeAttribute: (name) => attributes.delete(name),
+      getAttribute: (name) => attributes.get(name),
       querySelector: (selector) => selector === '.pkg-match-label' ? label : null,
     };
   });
   const hint = { textContent: '' };
-  const banner = { classList: classList() };
+  const banner = { classList: classList(), scrollIntoView() {} };
+  const interactive = (value = '') => ({
+    value,
+    max: '32000',
+    listeners: new Map(),
+    addEventListener(name, listener) { this.listeners.set(name, listener); },
+  });
+  const slider = interactive('0');
+  const input = interactive('');
+  const button = interactive();
   const elements = new Map([
-    ['billSlider', { value: '0', max: '50000' }],
-    ['billFinder', { value: '' }],
+    ['billSlider', slider],
+    ['billFinder', input],
+    ['findPackagesBtn', button],
     ['billHint', hint],
     ['pkgCustomBanner', banner],
     ...cards.map((card) => [`card-${card.id}`, card]),
@@ -98,7 +120,7 @@ function packageUiFrom(html, file) {
   assert.ok(start >= 0 && end > start, `${file}: package UI script is extractable`);
   const context = { window: {}, document };
   vm.runInNewContext(html.slice(start, end), context, { filename: file });
-  return { context, cards, hint, banner };
+  return { context, cards, hint, banner, input, button };
 }
 
 function navigationFrom(html, file) {
@@ -145,11 +167,14 @@ function navigationFrom(html, file) {
 
 for (const file of files) {
   const html = fs.readFileSync(file, 'utf8');
-  const packageSection = html.slice(html.indexOf('<!-- PACKAGES -->'), html.indexOf('</section>', html.indexOf('<!-- PACKAGES -->')));
+  const packageSection = html.slice(html.indexOf('<!-- PACKAGES -->'), html.indexOf('<!-- ROI / THE MATH SECTION -->'));
   const navSection = html.slice(html.indexOf('<!-- NAV -->'), html.indexOf('<!-- HERO -->'));
   const finder = packageFinderFrom(html, file);
+  const canonicalIds = packageIds;
 
   assert.equal(finder.catalog.length, 9, `${file}: exactly 9 packages in finder catalog`);
+  assert.deepEqual(Array.from(finder.catalog, (entry) => entry.id), canonicalIds,
+    `${file}: finder catalog remains in canonical order`);
   for (const name of packageNames) assert.match(packageSection, new RegExp(name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), `${file}: ${name}`);
   for (const range of packageRanges) assert.match(packageSection, new RegExp(range.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), `${file}: ${range}`);
   for (const [bill, expected] of boundaries) {
@@ -157,30 +182,57 @@ for (const file of files) {
   }
 
   const packageUi = packageUiFrom(html, file);
+  assert.deepEqual(packageUi.cards.map((card) => card.id), canonicalIds,
+    `${file}: card DOM starts in canonical order`);
   for (const [bill, expected] of boundaries) {
     packageUi.context.highlightPackage(bill);
-    const displayed = packageUi.cards
-      .filter((card) => card.classList.contains('highlighted'))
-      .sort((a, b) => Number(a.style.order) - Number(b.style.order))
+    const qualifying = packageUi.cards
+      .filter((card) => card.classList.contains('is-primary-match') || card.classList.contains('is-range-match'))
+      .sort((a, b) => Number(a.getAttribute('data-match-order')) - Number(b.getAttribute('data-match-order')))
       .map((card) => card.id);
-    assert.deepEqual(displayed, expected, `${file}: rendered order for bill ${bill}`);
+    assert.deepEqual(qualifying, expected, `${file}: qualifying states for bill ${bill}`);
+    const primary = packageUi.cards.filter((card) => card.classList.contains('is-primary-match'));
+    assert.deepEqual(primary.map((card) => card.id), expected.length ? [expected[0]] : [],
+      `${file}: closest-midpoint primary for bill ${bill}`);
+    assert.deepEqual(packageUi.cards.map((card) => card.id), canonicalIds,
+      `${file}: card DOM order is stable for bill ${bill}`);
+    assert.ok(packageUi.cards.every((card) => !Object.hasOwn(card.style, 'order')),
+      `${file}: no inline catalog ordering for bill ${bill}`);
     assert.equal(packageUi.banner.classList.contains('is-emphasized'), bill > 30000,
       `${file}: custom treatment for bill ${bill}`);
   }
+  packageUi.input.value = '8000';
+  packageUi.button.listeners.get('click')();
+  assert.equal(packageUi.cards.find((card) => card.id === 'sunburst-8').classList.contains('is-primary-match'), true,
+    `${file}: finder action applies the closest-midpoint result`);
   packageUi.context.highlightPackage('');
   assert.equal(packageUi.banner.classList.contains('is-emphasized'), false,
     `${file}: clearing the bill resets custom treatment`);
-  assert.ok(packageUi.cards.every((card) => card.style.order === ''),
-    `${file}: clearing the bill restores catalog order`);
+  assert.ok(packageUi.cards.every((card) =>
+    !card.classList.contains('is-primary-match') &&
+    !card.classList.contains('is-range-match') &&
+    !card.classList.contains('is-subdued')),
+  `${file}: clearing the bill resets all match states`);
 
-  assert.match(packageSection, /Grid-Tie or Hybrid options available/);
+  assert.match(packageSection, /Find My Packages/);
+  assert.match(packageSection, /Monthly bill guide/);
+  assert.match(packageSection, /Typical loads/);
+  assert.match(packageSection, /Fully customizable based on site assessment/);
+  assert.match(packageSection, /Grid-Tie \/ Hybrid/);
   assert.match(packageSection, /Discuss My Solar Needs/);
+  assert.match(packageSection, /pkg-use-icon/);
   assert.doesNotMatch(packageSection, /Download Package Specs/);
   assert.doesNotMatch(packageSection, /For Homes|For Business|typical Filipino homes|businesses/i);
   assert.doesNotMatch(`${packageSection}\n${navSection}`, /Get My\s+.*FREE\s+Quote|Get a free quote|Talk to an Engineer|Book a free assessment/);
-  assert.doesNotMatch(packageSection, /25-Yr Warranty|25-Year Warranty|25-Year Lifespan/);
+  assert.doesNotMatch(packageSection, /25-Yr Warranty|25-Year Warranty|25-Year Lifespan|Net Metering Ready/);
   assert.match(packageSection, /25-Yr Panel Warranty/);
+  assert.match(packageSection, /25-Year Panel Performance Warranty/);
   assert.doesNotMatch(html, /PKG\.find\s*\(/);
+  assert.doesNotMatch(html, /style\.order/);
+  assert.match(html, /styles\/main\.css\?v=packages-nav-v2/);
+  assert.match(packageSection, /id="billFinder"[^>]*oninput="syncBillSlider\(this\.value\)"/);
+  assert.match(packageSection, /id="billSlider"[^>]*oninput="syncBillInput\(this\.value\)"/);
+  assert.doesNotMatch(packageSection, /oninput="[^"]*highlightPackage/);
 
   assert.match(navSection, /<button class="nav-toggle"/);
   assert.match(navSection, /aria-expanded="false"/);
@@ -223,8 +275,25 @@ for (const file of files) {
 const css = fs.readFileSync('styles/main.css', 'utf8');
 assert.match(css, /\.nav-toggle[\s\S]*width:44px[\s\S]*height:44px/);
 assert.match(css, /@media \(max-width:960px\)/);
+assert.equal((css.match(/^\.nav-toggle\{/gm) || []).length, 1,
+  'one authoritative base nav-toggle rule');
+assert.equal((css.match(/^\.nav-mobile\{/gm) || []).length, 1,
+  'one authoritative base nav-mobile rule');
+assert.equal((css.match(/Authoritative mobile navigation implementation/g) || []).length, 1,
+  'one authoritative mobile navigation block');
+assert.match(css, /\.nav-toggle\{[^}]*flex:0 0 44px/);
+assert.match(css, /\.nav-brand\{[^}]*min-width:0/);
+assert.match(css, /grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/);
+assert.match(css, /\.bill-finder\{[^}]*background:var\(--navy\)/);
+assert.match(css, /\.pkg-card\{[^}]*background:#fff/);
 assert.match(css, /scroll-snap-type:x mandatory/);
+assert.match(css, /flex:0 0 84vw/);
 assert.match(css, /prefers-reduced-motion:reduce/);
-assert.doesNotMatch(css, /\.bill-selector|\.pkg-card\.popular|\.popular-badge|\.pkg-package-name|\.pkg-savings|\.pkg-appliances|\.btn-pkg-secondary/);
+assert.doesNotMatch(css, /\.bill-selector|\.pkg-card\.popular|\.popular-badge|\.pkg-package-name|\.pkg-savings|\.pkg-appliances|\.btn-pkg-secondary|\.pkg-header|\.pkg-baseline-note/);
+
+const stagingCss = fs.readFileSync('staging-app/styles/main.css', 'utf8');
+assert.equal(stagingCss, css, 'root and staging CSS are byte-identical');
+assert.equal(fs.readFileSync('staging-app/index.html', 'utf8'), fs.readFileSync('index.html', 'utf8'),
+  'root and staging HTML are byte-identical');
 
 console.log('packages_navigation: PASS');

@@ -1,270 +1,163 @@
 <!-- PACKAGES -->
 <section class="packages-sec" id="packages">
-<div class="sec-center fade-up" style="position:relative;z-index:1">
+<div class="pkg-wrap">
+<header class="pkg-intro fade-up">
 <div class="pkg-eyebrow">Solar Packages</div>
 <h2 class="pkg-title">Solar packages for every starting point</h2>
-<p class="pkg-sub">Enter a monthly electricity bill to see every package range that includes it. Overlapping ranges stay visible for comparison; this is an initial guide, not engineering sizing.</p>
-<div class="bill-finder" role="group" aria-labelledby="billFinderLabel">
-<label class="bill-finder-label" id="billFinderLabel" for="billFinder">Average monthly electricity bill</label>
+<p class="pkg-sub">Start with your monthly electric bill. We’ll show every package range that includes it, then confirm final sizing after a free usage and site assessment.</p>
+</header>
+
+<section class="bill-finder fade-up" aria-labelledby="billFinderHeading">
+<div class="bill-finder-copy">
+<span class="bill-finder-kicker">Package finder</span>
+<h3 id="billFinderHeading">What’s your average monthly bill?</h3>
+<p>Enter or slide to your usual bill, then find the package ranges that are sensible starting points for comparison.</p>
+</div>
+<div class="bill-finder-controls">
+<label class="bill-finder-label" for="billFinder">Monthly electric bill</label>
 <div class="bill-input-row">
 <span class="bill-currency" aria-hidden="true">₱</span>
-<input class="bill-input" id="billFinder" type="number" inputmode="decimal" min="0" max="100000" step="1" placeholder="e.g. 8,000" aria-describedby="billFinderHelp" oninput="syncBillSlider(this.value); highlightPackage(this.value)"/>
+<input class="bill-input" id="billFinder" type="number" inputmode="numeric" min="0" max="100000" step="1" placeholder="9,000" aria-describedby="billFinderHelp" oninput="syncBillSlider(this.value)"/>
 </div>
-<label class="bill-slider-label" for="billSlider">Adjust bill amount</label>
-<input class="bill-slider" id="billSlider" type="range" min="0" max="50000" step="1" value="0" aria-label="Adjust average monthly electricity bill" aria-describedby="billFinderHelp" oninput="syncBillInput(this.value); highlightPackage(this.value)"/>
-<p class="bill-finder-help" id="billFinderHelp">Overlapping package ranges are shown together. Bills above ₱30,000 receive custom-assessment treatment.</p>
+<label class="bill-slider-label" for="billSlider">Adjust monthly bill</label>
+<input class="bill-slider" id="billSlider" type="range" min="0" max="32000" step="500" value="0" aria-describedby="billFinderHelp" oninput="syncBillInput(this.value)"/>
+<div class="bill-range-scale" aria-hidden="true"><span>₱0</span><span>₱16,000</span><span>₱32,000+</span></div>
+<button class="bill-find-button" id="findPackagesBtn" type="button">Find My Packages</button>
+<p class="bill-finder-help" id="billFinderHelp">A comparison guide only. Final configuration follows a site and usage assessment.</p>
 </div>
-<div class="bill-hint" id="billHint" role="status" aria-live="polite"></div>
+</section>
+
+<div class="pkg-result-summary" id="billHint" role="status" aria-live="polite">Choose a bill amount, then find matching packages.</div>
+
+<svg class="pkg-icon-sprite" aria-hidden="true">
+<defs>
+<symbol id="pkg-icon-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 2a6 6 0 0 0-4 10.5c.7.7 1 1.3 1 2.5h6c0-1.2.3-1.8 1-2.5A6 6 0 0 0 12 2z"/></symbol>
+<symbol id="pkg-icon-fridge" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M6 10h12M9 5v2M9 13v3"/></symbol>
+<symbol id="pkg-icon-tv" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8"/></symbol>
+<symbol id="pkg-icon-wifi" viewBox="0 0 24 24"><path d="M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/></symbol>
+<symbol id="pkg-icon-aircon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="7" rx="2"/><path d="M6 16c0 1.5 1 2 2 2M12 16c0 2-1 2.5-2 3M18 16c0 1.5-1 2-2 2"/></symbol>
+<symbol id="pkg-icon-computer" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
+<symbol id="pkg-icon-washer" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="14" r="4"/><path d="M8 5h.01M11 5h.01"/></symbol>
+<symbol id="pkg-icon-pump" viewBox="0 0 24 24"><path d="M4 21h16M6 21v-6h6v6M12 15l4-3V7M14 7h4M9 15V9a3 3 0 0 1 6 0"/></symbol>
+<symbol id="pkg-icon-factory" viewBox="0 0 24 24"><path d="M3 21h18M3 21V9l6 4V9l6 4V5h6v16"/></symbol>
+<symbol id="pkg-icon-plant" viewBox="0 0 24 24"><path d="M12 22V12M12 12c0-3-2-5-5-5 0 3 2 5 5 5zM12 12c0-3 2-5 5-5 0 3-2 5-5 5z"/></symbol>
+</defs>
+</svg>
+
+<div class="pkg-grid fade-up" id="pkgGrid" tabindex="0" aria-label="Solar package catalog in ascending order">
+<article class="pkg-card" id="card-sunrise-3" data-package-id="sunrise-3" data-tier="starter">
+<span class="pkg-match-label"></span><span class="pkg-tier">Starter</span><h3 class="pkg-name">Sunrise 3 HB</h3>
+<div class="pkg-bill-label">Monthly bill guide</div><p class="pkg-range">Below ₱5,000</p>
+<div class="pkg-uses-label">Typical loads</div><div class="pkg-uses">
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-bulb"/></svg></span><span>Lighting</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-fridge"/></svg></span><span>Refrigerator</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-tv"/></svg></span><span>TV</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-wifi"/></svg></span><span>WiFi Router</span></div>
+</div><div class="pkg-chips"><span class="pkg-chip">Grid-Tie / Hybrid</span><span class="pkg-chip warranty">25-Yr Panel Warranty</span></div>
+<div class="pkg-card-spacer"></div><button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button><p class="pkg-card-custom-note">Fully customizable based on site assessment</p>
+</article>
+
+<article class="pkg-card" id="card-sunbeam-6" data-package-id="sunbeam-6" data-tier="core">
+<span class="pkg-match-label"></span><span class="pkg-tier">Core</span><h3 class="pkg-name">Sunbeam 6 HB</h3>
+<div class="pkg-bill-label">Monthly bill guide</div><p class="pkg-range">₱5,000–₱8,000</p>
+<div class="pkg-uses-label">Typical loads</div><div class="pkg-uses">
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-aircon"/></svg></span><span>Aircon</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-fridge"/></svg></span><span>Refrigerator</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-computer"/></svg></span><span>Computer</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-tv"/></svg></span><span>TV</span></div>
+</div><div class="pkg-chips"><span class="pkg-chip">Grid-Tie / Hybrid</span><span class="pkg-chip warranty">25-Yr Panel Warranty</span></div>
+<div class="pkg-card-spacer"></div><button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button><p class="pkg-card-custom-note">Fully customizable based on site assessment</p>
+</article>
+
+<article class="pkg-card" id="card-sunburst-8" data-package-id="sunburst-8" data-tier="growth">
+<span class="pkg-match-label"></span><span class="pkg-tier">Growth</span><h3 class="pkg-name">Sunburst 8 HB</h3>
+<div class="pkg-bill-label">Monthly bill guide</div><p class="pkg-range">₱6,000–₱10,000</p>
+<div class="pkg-uses-label">Typical loads</div><div class="pkg-uses">
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-aircon"/></svg></span><span>Aircon</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-fridge"/></svg></span><span>Refrigerator</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-washer"/></svg></span><span>Washing Machine</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-tv"/></svg></span><span>TV</span></div>
+</div><div class="pkg-chips"><span class="pkg-chip">Grid-Tie / Hybrid</span><span class="pkg-chip warranty">25-Yr Panel Warranty</span></div>
+<div class="pkg-card-spacer"></div><button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button><p class="pkg-card-custom-note">Fully customizable based on site assessment</p>
+</article>
+
+<article class="pkg-card" id="card-sunflare-10" data-package-id="sunflare-10" data-tier="growth">
+<span class="pkg-match-label"></span><span class="pkg-tier">Growth</span><h3 class="pkg-name">Sunflare 10 HB</h3>
+<div class="pkg-bill-label">Monthly bill guide</div><p class="pkg-range">₱8,000–₱12,000</p>
+<div class="pkg-uses-label">Typical loads</div><div class="pkg-uses">
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-aircon"/></svg></span><span>Aircon</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-washer"/></svg></span><span>Washing Machine</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-computer"/></svg></span><span>Computer</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-tv"/></svg></span><span>TV</span></div>
+</div><div class="pkg-chips"><span class="pkg-chip">Grid-Tie / Hybrid</span><span class="pkg-chip warranty">25-Yr Panel Warranty</span></div>
+<div class="pkg-card-spacer"></div><button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button><p class="pkg-card-custom-note">Fully customizable based on site assessment</p>
+</article>
+
+<article class="pkg-card" id="card-suncrest-12" data-package-id="suncrest-12" data-tier="growth">
+<span class="pkg-match-label"></span><span class="pkg-tier">Growth</span><h3 class="pkg-name">Suncrest 12 HB</h3>
+<div class="pkg-bill-label">Monthly bill guide</div><p class="pkg-range">₱10,000–₱14,000</p>
+<div class="pkg-uses-label">Typical loads</div><div class="pkg-uses">
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-factory"/></svg></span><span>Commercial</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-pump"/></svg></span><span>Water Pump</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-computer"/></svg></span><span>Computer</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-washer"/></svg></span><span>Washing Machine</span></div>
+</div><div class="pkg-chips"><span class="pkg-chip">Grid-Tie / Hybrid</span><span class="pkg-chip warranty">25-Yr Panel Warranty</span></div>
+<div class="pkg-card-spacer"></div><button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button><p class="pkg-card-custom-note">Fully customizable based on site assessment</p>
+</article>
+
+<article class="pkg-card" id="card-sunforge-16" data-package-id="sunforge-16" data-tier="forge">
+<span class="pkg-match-label"></span><span class="pkg-tier">Sunforge</span><h3 class="pkg-name">Sunforge 16 HB</h3>
+<div class="pkg-bill-label">Monthly bill guide</div><p class="pkg-range">₱14,000–₱18,000</p>
+<div class="pkg-uses-label">Typical loads</div><div class="pkg-uses">
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-factory"/></svg></span><span>Commercial</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-aircon"/></svg></span><span>Aircon</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-computer"/></svg></span><span>Computer</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-washer"/></svg></span><span>Washing Machine</span></div>
+</div><div class="pkg-chips"><span class="pkg-chip">Grid-Tie / Hybrid</span><span class="pkg-chip warranty">25-Yr Panel Warranty</span></div>
+<div class="pkg-card-spacer"></div><button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button><p class="pkg-card-custom-note">Fully customizable based on site assessment</p>
+</article>
+
+<article class="pkg-card" id="card-sunforge-18" data-package-id="sunforge-18" data-tier="forge">
+<span class="pkg-match-label"></span><span class="pkg-tier">Sunforge</span><h3 class="pkg-name">Sunforge 18 HB</h3>
+<div class="pkg-bill-label">Monthly bill guide</div><p class="pkg-range">₱16,000–₱22,000</p>
+<div class="pkg-uses-label">Typical loads</div><div class="pkg-uses">
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-factory"/></svg></span><span>Commercial</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-aircon"/></svg></span><span>Aircon</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-computer"/></svg></span><span>Computer</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-pump"/></svg></span><span>Water Pump</span></div>
+</div><div class="pkg-chips"><span class="pkg-chip">Grid-Tie / Hybrid</span><span class="pkg-chip warranty">25-Yr Panel Warranty</span></div>
+<div class="pkg-card-spacer"></div><button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button><p class="pkg-card-custom-note">Fully customizable based on site assessment</p>
+</article>
+
+<article class="pkg-card" id="card-sunforge-20" data-package-id="sunforge-20" data-tier="forge">
+<span class="pkg-match-label"></span><span class="pkg-tier">Sunforge</span><h3 class="pkg-name">Sunforge 20 HB</h3>
+<div class="pkg-bill-label">Monthly bill guide</div><p class="pkg-range">₱18,000–₱24,000</p>
+<div class="pkg-uses-label">Typical loads</div><div class="pkg-uses">
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-factory"/></svg></span><span>Commercial</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-pump"/></svg></span><span>Water Pump</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-computer"/></svg></span><span>Computer</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-aircon"/></svg></span><span>Aircon</span></div>
+</div><div class="pkg-chips"><span class="pkg-chip">Grid-Tie / Hybrid</span><span class="pkg-chip warranty">25-Yr Panel Warranty</span></div>
+<div class="pkg-card-spacer"></div><button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button><p class="pkg-card-custom-note">Fully customizable based on site assessment</p>
+</article>
+
+<article class="pkg-card" id="card-sunforge-24" data-package-id="sunforge-24" data-tier="forge">
+<span class="pkg-match-label"></span><span class="pkg-tier">Sunforge</span><h3 class="pkg-name">Sunforge 24 HB</h3>
+<div class="pkg-bill-label">Monthly bill guide</div><p class="pkg-range">₱20,000–₱30,000</p>
+<div class="pkg-uses-label">Typical loads</div><div class="pkg-uses">
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-factory"/></svg></span><span>Commercial</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-plant"/></svg></span><span>Agri / Farm</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-pump"/></svg></span><span>Water Pump</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-computer"/></svg></span><span>Computer</span></div>
+</div><div class="pkg-chips"><span class="pkg-chip">Grid-Tie / Hybrid</span><span class="pkg-chip warranty">25-Yr Panel Warranty</span></div>
+<div class="pkg-card-spacer"></div><button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button><p class="pkg-card-custom-note">Fully customizable based on site assessment</p>
+</article>
 </div>
-<div class="pkg-custom-banner fade-up" id="pkgCustomBanner">
-<div class="pkg-custom-banner-icon" aria-hidden="true">
-<svg fill="none" height="20" stroke="#F59E0B" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="20"><circle cx="12" cy="12" r="3"></circle><path d="M19.07 4.93l-1.41 1.41M6.34 17.66l-1.41 1.41M21 12h-2M5 12H3M18.36 18.36l-1.41-1.41M7.05 7.05L5.64 5.64M12 19v2M12 3V1"></path></svg>
-</div>
-<div class="pkg-custom-banner-text">
-<strong>Need help beyond the listed ranges?</strong>
-<span>We can review your usage, site, and goals through a custom assessment. Grid-Tie or Hybrid options are available.</span>
-</div>
+
+<div class="pkg-custom-banner fade-up" id="pkgCustomBanner" tabindex="-1">
+<div class="pkg-custom-banner-text"><strong>Need more than a standard package?</strong><span>We can review custom loads, backup needs, site conditions, and Grid-Tie / Hybrid options through a tailored assessment.</span></div>
 <button class="pkg-custom-banner-cta" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Discuss My Solar Needs</button>
 </div>
-<div class="pkg-baseline-note fade-up">
-<svg fill="none" height="16" stroke="rgba(245,158,11,.8)" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="16" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
-<span><strong style="color:rgba(255,255,255,.85)">Start with the bill range that fits.</strong> Package cards are comparison guides; final configuration follows a site and usage assessment.</span>
+<p class="pkg-disclaimer">Bill ranges and typical loads are starting guides only. Final sizing depends on actual usage, backup needs, and site conditions. 25-Year Panel Performance Warranty.</p>
 </div>
-<div class="pkg-grid fade-up" id="pkgGrid" tabindex="0" aria-label="Solar package cards">
-<article class="pkg-card" id="card-sunrise-3" data-package-id="sunrise-3">
-<div class="pkg-header h-sunrise">
-<div class="pkg-tier">Starter</div>
-<h3 class="pkg-tagline">Sunrise 3 HB</h3>
-<p class="pkg-range">Below ₱5,000</p>
-<p class="pkg-fit">Grid-Tie or Hybrid options available.</p>
-</div>
-<div class="pkg-body">
-<div class="pkg-match-label" aria-live="polite"></div>
-<div class="pkg-spec-row">
-<span class="pkg-spec-label">Bill range</span>
-<span class="pkg-spec-value">Below ₱5,000</span>
-</div>
-<div class="pkg-spec-row">
-<span class="pkg-spec-label">System option</span>
-<span class="pkg-spec-value">Grid-Tie or Hybrid</span>
-</div>
-<div class="pkg-badges">
-<span class="pkg-badge b-blue">25-Yr Panel Warranty</span>
-</div>
-</div>
-<div class="pkg-footer">
-<button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button>
-<p class="pkg-card-custom-note">Final configuration follows a site assessment.</p>
-</div>
-</article>
-<article class="pkg-card" id="card-sunbeam-6" data-package-id="sunbeam-6">
-<div class="pkg-header h-sunbeam">
-<div class="pkg-tier">Starter</div>
-<h3 class="pkg-tagline">Sunbeam 6 HB</h3>
-<p class="pkg-range">₱5,000–₱8,000</p>
-<p class="pkg-fit">Grid-Tie or Hybrid options available.</p>
-</div>
-<div class="pkg-body">
-<div class="pkg-match-label" aria-live="polite"></div>
-<div class="pkg-spec-row">
-<span class="pkg-spec-label">Bill range</span>
-<span class="pkg-spec-value">₱5,000–₱8,000</span>
-</div>
-<div class="pkg-spec-row">
-<span class="pkg-spec-label">System option</span>
-<span class="pkg-spec-value">Grid-Tie or Hybrid</span>
-</div>
-<div class="pkg-badges">
-<span class="pkg-badge b-blue">25-Yr Panel Warranty</span>
-</div>
-</div>
-<div class="pkg-footer">
-<button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button>
-<p class="pkg-card-custom-note">Final configuration follows a site assessment.</p>
-</div>
-</article>
-<article class="pkg-card" id="card-sunburst-8" data-package-id="sunburst-8">
-<div class="pkg-header h-sunburst">
-<div class="pkg-tier">Core</div>
-<h3 class="pkg-tagline">Sunburst 8 HB</h3>
-<p class="pkg-range">₱6,000–₱10,000</p>
-<p class="pkg-fit">Grid-Tie or Hybrid options available.</p>
-</div>
-<div class="pkg-body">
-<div class="pkg-match-label" aria-live="polite"></div>
-<div class="pkg-spec-row">
-<span class="pkg-spec-label">Bill range</span>
-<span class="pkg-spec-value">₱6,000–₱10,000</span>
-</div>
-<div class="pkg-spec-row">
-<span class="pkg-spec-label">System option</span>
-<span class="pkg-spec-value">Grid-Tie or Hybrid</span>
-</div>
-<div class="pkg-badges">
-<span class="pkg-badge b-blue">25-Yr Panel Warranty</span>
-</div>
-</div>
-<div class="pkg-footer">
-<button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button>
-<p class="pkg-card-custom-note">Final configuration follows a site assessment.</p>
-</div>
-</article>
-<article class="pkg-card" id="card-sunflare-10" data-package-id="sunflare-10">
-<div class="pkg-header h-sunflare">
-<div class="pkg-tier">Core</div>
-<h3 class="pkg-tagline">Sunflare 10 HB</h3>
-<p class="pkg-range">₱8,000–₱12,000</p>
-<p class="pkg-fit">Grid-Tie or Hybrid options available.</p>
-</div>
-<div class="pkg-body">
-<div class="pkg-match-label" aria-live="polite"></div>
-<div class="pkg-spec-row">
-<span class="pkg-spec-label">Bill range</span>
-<span class="pkg-spec-value">₱8,000–₱12,000</span>
-</div>
-<div class="pkg-spec-row">
-<span class="pkg-spec-label">System option</span>
-<span class="pkg-spec-value">Grid-Tie or Hybrid</span>
-</div>
-<div class="pkg-badges">
-<span class="pkg-badge b-blue">25-Yr Panel Warranty</span>
-</div>
-</div>
-<div class="pkg-footer">
-<button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button>
-<p class="pkg-card-custom-note">Final configuration follows a site assessment.</p>
-</div>
-</article>
-<article class="pkg-card" id="card-suncrest-12" data-package-id="suncrest-12">
-<div class="pkg-header h-suncrest">
-<div class="pkg-tier">Growth</div>
-<h3 class="pkg-tagline">Suncrest 12 HB</h3>
-<p class="pkg-range">₱10,000–₱14,000</p>
-<p class="pkg-fit">Grid-Tie or Hybrid options available.</p>
-</div>
-<div class="pkg-body">
-<div class="pkg-match-label" aria-live="polite"></div>
-<div class="pkg-spec-row">
-<span class="pkg-spec-label">Bill range</span>
-<span class="pkg-spec-value">₱10,000–₱14,000</span>
-</div>
-<div class="pkg-spec-row">
-<span class="pkg-spec-label">System option</span>
-<span class="pkg-spec-value">Grid-Tie or Hybrid</span>
-</div>
-<div class="pkg-badges">
-<span class="pkg-badge b-blue">25-Yr Panel Warranty</span>
-</div>
-</div>
-<div class="pkg-footer">
-<button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button>
-<p class="pkg-card-custom-note">Final configuration follows a site assessment.</p>
-</div>
-</article>
-<article class="pkg-card" id="card-sunforge-16" data-package-id="sunforge-16">
-<div class="pkg-header h-sunforge">
-<div class="pkg-tier">Growth</div>
-<h3 class="pkg-tagline">Sunforge 16 HB</h3>
-<p class="pkg-range">₱14,000–₱18,000</p>
-<p class="pkg-fit">Grid-Tie or Hybrid options available.</p>
-</div>
-<div class="pkg-body">
-<div class="pkg-match-label" aria-live="polite"></div>
-<div class="pkg-spec-row">
-<span class="pkg-spec-label">Bill range</span>
-<span class="pkg-spec-value">₱14,000–₱18,000</span>
-</div>
-<div class="pkg-spec-row">
-<span class="pkg-spec-label">System option</span>
-<span class="pkg-spec-value">Grid-Tie or Hybrid</span>
-</div>
-<div class="pkg-badges">
-<span class="pkg-badge b-blue">25-Yr Panel Warranty</span>
-</div>
-</div>
-<div class="pkg-footer">
-<button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button>
-<p class="pkg-card-custom-note">Final configuration follows a site assessment.</p>
-</div>
-</article>
-<article class="pkg-card" id="card-sunforge-18" data-package-id="sunforge-18">
-<div class="pkg-header h-sunforge">
-<div class="pkg-tier">Sunforge</div>
-<h3 class="pkg-tagline">Sunforge 18 HB</h3>
-<p class="pkg-range">₱16,000–₱22,000</p>
-<p class="pkg-fit">Grid-Tie or Hybrid options available.</p>
-</div>
-<div class="pkg-body">
-<div class="pkg-match-label" aria-live="polite"></div>
-<div class="pkg-spec-row">
-<span class="pkg-spec-label">Bill range</span>
-<span class="pkg-spec-value">₱16,000–₱22,000</span>
-</div>
-<div class="pkg-spec-row">
-<span class="pkg-spec-label">System option</span>
-<span class="pkg-spec-value">Grid-Tie or Hybrid</span>
-</div>
-<div class="pkg-badges">
-<span class="pkg-badge b-blue">25-Yr Panel Warranty</span>
-</div>
-</div>
-<div class="pkg-footer">
-<button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button>
-<p class="pkg-card-custom-note">Final configuration follows a site assessment.</p>
-</div>
-</article>
-<article class="pkg-card" id="card-sunforge-20" data-package-id="sunforge-20">
-<div class="pkg-header h-sunforge">
-<div class="pkg-tier">Sunforge</div>
-<h3 class="pkg-tagline">Sunforge 20 HB</h3>
-<p class="pkg-range">₱18,000–₱24,000</p>
-<p class="pkg-fit">Grid-Tie or Hybrid options available.</p>
-</div>
-<div class="pkg-body">
-<div class="pkg-match-label" aria-live="polite"></div>
-<div class="pkg-spec-row">
-<span class="pkg-spec-label">Bill range</span>
-<span class="pkg-spec-value">₱18,000–₱24,000</span>
-</div>
-<div class="pkg-spec-row">
-<span class="pkg-spec-label">System option</span>
-<span class="pkg-spec-value">Grid-Tie or Hybrid</span>
-</div>
-<div class="pkg-badges">
-<span class="pkg-badge b-blue">25-Yr Panel Warranty</span>
-</div>
-</div>
-<div class="pkg-footer">
-<button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button>
-<p class="pkg-card-custom-note">Final configuration follows a site assessment.</p>
-</div>
-</article>
-<article class="pkg-card" id="card-sunforge-24" data-package-id="sunforge-24">
-<div class="pkg-header h-sunforge">
-<div class="pkg-tier">Sunforge</div>
-<h3 class="pkg-tagline">Sunforge 24 HB</h3>
-<p class="pkg-range">₱20,000–₱30,000</p>
-<p class="pkg-fit">Grid-Tie or Hybrid options available.</p>
-</div>
-<div class="pkg-body">
-<div class="pkg-match-label" aria-live="polite"></div>
-<div class="pkg-spec-row">
-<span class="pkg-spec-label">Bill range</span>
-<span class="pkg-spec-value">₱20,000–₱30,000</span>
-</div>
-<div class="pkg-spec-row">
-<span class="pkg-spec-label">System option</span>
-<span class="pkg-spec-value">Grid-Tie or Hybrid</span>
-</div>
-<div class="pkg-badges">
-<span class="pkg-badge b-blue">25-Yr Panel Warranty</span>
-</div>
-</div>
-<div class="pkg-footer">
-<button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button>
-<p class="pkg-card-custom-note">Final configuration follows a site assessment.</p>
-</div>
-</article>
-</div>
-<p class="pkg-disclaimer">Package ranges are initial comparison guides. Availability and final configuration are confirmed during your free quote review.</p>
 </section>
