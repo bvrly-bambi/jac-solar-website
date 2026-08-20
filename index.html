@@ -906,20 +906,22 @@ function highlightPackage(value) {
   var amount = Number(raw);
 
   cards.forEach(function (card) {
+    card.style.order = '';
     card.classList.remove('highlighted');
     card.removeAttribute('data-match-order');
     var label = card.querySelector('.pkg-match-label');
     if (label) { label.textContent = ''; }
   });
 
+  if (customBanner) { customBanner.classList.remove('is-emphasized'); }
+
   if (!hint || raw === '' || !Number.isFinite(amount) || amount < 0) {
     if (hint) { hint.textContent = ''; }
     return [];
   }
 
-  if (customBanner) { customBanner.classList.toggle('is-emphasized', amount > 30000); }
-
   if (amount > 30000) {
+    if (customBanner) { customBanner.classList.add('is-emphasized'); }
     hint.textContent = 'Above ₱30,000: no package range is shown. Please use custom assessment.';
     return [];
   }
@@ -930,10 +932,15 @@ function highlightPackage(value) {
     return [];
   }
 
+  cards.forEach(function (card, index) {
+    card.style.order = String(100 + index);
+  });
+
   matches.forEach(function (packageInfo, index) {
     var card = document.getElementById('card-' + packageInfo.id);
     if (!card) { return; }
     card.classList.add('highlighted');
+    card.style.order = String(index + 1);
     card.setAttribute('data-match-order', String(index + 1));
     var label = card.querySelector('.pkg-match-label');
     if (label) {
@@ -1517,7 +1524,7 @@ document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
   });
 
   document.addEventListener('click', function (event) {
-    if (panel.classList.contains('open') && event.target !== toggle && !panel.contains(event.target)) {
+    if (panel.classList.contains('open') && !toggle.contains(event.target) && !panel.contains(event.target)) {
       setOpen(false, false);
     }
   });

@@ -50,6 +50,99 @@ function packageFinderFrom(html, file) {
   return context.window.JACPackageFinder;
 }
 
+function classList(initial = []) {
+  const names = new Set(initial);
+  return {
+    add: (...values) => values.forEach((value) => names.add(value)),
+    remove: (...values) => values.forEach((value) => names.delete(value)),
+    contains: (value) => names.has(value),
+    toggle(value, force) {
+      const enabled = force === undefined ? !names.has(value) : Boolean(force);
+      if (enabled) names.add(value);
+      else names.delete(value);
+      return enabled;
+    },
+  };
+}
+
+function packageUiFrom(html, file) {
+  const ids = [...html.matchAll(/data-package-id="([^"]+)"/g)].map((match) => match[1]);
+  const cards = ids.map((id) => {
+    const label = { textContent: '' };
+    const attributes = new Map();
+    return {
+      id,
+      style: {},
+      classList: classList(),
+      label,
+      setAttribute: (name, value) => attributes.set(name, value),
+      removeAttribute: (name) => attributes.delete(name),
+      querySelector: (selector) => selector === '.pkg-match-label' ? label : null,
+    };
+  });
+  const hint = { textContent: '' };
+  const banner = { classList: classList() };
+  const elements = new Map([
+    ['billSlider', { value: '0', max: '50000' }],
+    ['billFinder', { value: '' }],
+    ['billHint', hint],
+    ['pkgCustomBanner', banner],
+    ...cards.map((card) => [`card-${card.id}`, card]),
+  ]);
+  const document = {
+    querySelectorAll: (selector) => selector === '.pkg-card' ? cards : [],
+    getElementById: (id) => elements.get(id) || null,
+  };
+  const start = html.indexOf('/* PACKAGE_FINDER_START */');
+  const end = html.indexOf('const obs=', start);
+  assert.ok(start >= 0 && end > start, `${file}: package UI script is extractable`);
+  const context = { window: {}, document };
+  vm.runInNewContext(html.slice(start, end), context, { filename: file });
+  return { context, cards, hint, banner };
+}
+
+function navigationFrom(html, file) {
+  const documentListeners = new Map();
+  const windowListeners = new Map();
+  let document;
+  const element = () => ({
+    attributes: new Map(),
+    listeners: new Map(),
+    classList: classList(),
+    setAttribute(name, value) { this.attributes.set(name, value); },
+    addEventListener(name, listener) { this.listeners.set(name, listener); },
+    focus() { document.activeElement = this; },
+  });
+  const toggle = element();
+  const toggleBar = {};
+  toggle.contains = (target) => target === toggle || target === toggleBar;
+  const links = [element(), element(), element()];
+  const panel = element();
+  panel.querySelectorAll = () => links;
+  panel.contains = (target) => target === panel || links.includes(target);
+  document = {
+    activeElement: null,
+    body: { style: {} },
+    documentElement: { scrollTop: 0 },
+    getElementById(id) {
+      if (id === 'navToggle') return toggle;
+      if (id === 'navMobile') return panel;
+      return null;
+    },
+    addEventListener(name, listener) { documentListeners.set(name, listener); },
+  };
+  const window = {
+    innerWidth: 800,
+    addEventListener(name, listener) { windowListeners.set(name, listener); },
+  };
+  const start = html.indexOf('/* NAV_REVAMP_START */');
+  const endMarker = '/* NAV_REVAMP_END */';
+  const end = html.indexOf(endMarker, start);
+  assert.ok(start >= 0 && end > start, `${file}: navigation script is extractable`);
+  vm.runInNewContext(html.slice(start, end + endMarker.length), { window, document }, { filename: file });
+  return { document, window, toggle, toggleBar, panel, links, documentListeners, windowListeners };
+}
+
 for (const file of files) {
   const html = fs.readFileSync(file, 'utf8');
   const packageSection = html.slice(html.indexOf('<!-- PACKAGES -->'), html.indexOf('</section>', html.indexOf('<!-- PACKAGES -->')));
@@ -62,6 +155,23 @@ for (const file of files) {
   for (const [bill, expected] of boundaries) {
     assert.deepEqual(Array.from(finder.getMatches(bill), (entry) => entry.id), expected, `${file}: bill ${bill}`);
   }
+
+  const packageUi = packageUiFrom(html, file);
+  for (const [bill, expected] of boundaries) {
+    packageUi.context.highlightPackage(bill);
+    const displayed = packageUi.cards
+      .filter((card) => card.classList.contains('highlighted'))
+      .sort((a, b) => Number(a.style.order) - Number(b.style.order))
+      .map((card) => card.id);
+    assert.deepEqual(displayed, expected, `${file}: rendered order for bill ${bill}`);
+    assert.equal(packageUi.banner.classList.contains('is-emphasized'), bill > 30000,
+      `${file}: custom treatment for bill ${bill}`);
+  }
+  packageUi.context.highlightPackage('');
+  assert.equal(packageUi.banner.classList.contains('is-emphasized'), false,
+    `${file}: clearing the bill resets custom treatment`);
+  assert.ok(packageUi.cards.every((card) => card.style.order === ''),
+    `${file}: clearing the bill restores catalog order`);
 
   assert.match(packageSection, /Grid-Tie or Hybrid options available/);
   assert.match(packageSection, /Discuss My Solar Needs/);
@@ -77,12 +187,37 @@ for (const file of files) {
   assert.match(navSection, /aria-controls="navMobile"/);
   assert.match(navSection, /aria-label="Open navigation menu"/);
   assert.match(html, /NAV_REVAMP_START[\s\S]*Escape[\s\S]*resize/);
-  assert.match(html, /!panel\.contains\(event\.target\)/);
+  assert.match(html, /!toggle\.contains\(event\.target\)[\s\S]*!panel\.contains\(event\.target\)/);
   assert.match(html, /function setOpen\(open, returnFocus\)/);
   assert.match(html, /toggle\.addEventListener\('click'/);
   assert.match(html, /Array\.prototype\.forEach\.call\(focusable/);
   assert.match(html, /event\.key === 'Escape'/);
   assert.match(html, /window\.innerWidth > 960/);
+
+  const nav = navigationFrom(html, file);
+  nav.toggle.listeners.get('click')({ target: nav.toggleBar });
+  nav.documentListeners.get('click')({ target: nav.toggleBar });
+  assert.equal(nav.panel.classList.contains('open'), true,
+    `${file}: clicking a hamburger bar keeps the menu open`);
+  assert.equal(nav.toggle.attributes.get('aria-expanded'), 'true',
+    `${file}: opening updates aria-expanded`);
+
+  nav.documentListeners.get('keydown')({ key: 'Escape', shiftKey: false, preventDefault() {} });
+  assert.equal(nav.panel.classList.contains('open'), false, `${file}: Escape closes`);
+  assert.equal(nav.document.activeElement, nav.toggle, `${file}: Escape restores toggle focus`);
+
+  nav.toggle.listeners.get('click')({ target: nav.toggle });
+  nav.links[1].listeners.get('click')({ target: nav.links[1] });
+  assert.equal(nav.panel.classList.contains('open'), false, `${file}: link click closes`);
+
+  nav.toggle.listeners.get('click')({ target: nav.toggle });
+  nav.documentListeners.get('click')({ target: {} });
+  assert.equal(nav.panel.classList.contains('open'), false, `${file}: outside click closes`);
+
+  nav.toggle.listeners.get('click')({ target: nav.toggle });
+  nav.window.innerWidth = 961;
+  nav.windowListeners.get('resize')();
+  assert.equal(nav.panel.classList.contains('open'), false, `${file}: desktop resize resets`);
 }
 
 const css = fs.readFileSync('styles/main.css', 'utf8');
@@ -90,5 +225,6 @@ assert.match(css, /\.nav-toggle[\s\S]*width:44px[\s\S]*height:44px/);
 assert.match(css, /@media \(max-width:960px\)/);
 assert.match(css, /scroll-snap-type:x mandatory/);
 assert.match(css, /prefers-reduced-motion:reduce/);
+assert.doesNotMatch(css, /\.bill-selector|\.pkg-card\.popular|\.popular-badge|\.pkg-package-name|\.pkg-savings|\.pkg-appliances|\.btn-pkg-secondary/);
 
 console.log('packages_navigation: PASS');
