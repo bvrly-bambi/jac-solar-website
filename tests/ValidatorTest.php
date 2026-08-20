@@ -81,7 +81,7 @@ check(
 echo "\n── Allowlist contents ──\n";
 
 check('6 property types', count(Validator::PROPERTY_TYPES) === 6);
-check('10 bill ranges', count(Validator::BILL_RANGES) === 10);
+check('7 bill ranges', count(Validator::BILL_RANGES) === 7);
 check('Government present', in_array('Government', Validator::PROPERTY_TYPES, true));
 check('Other present', in_array('Other', Validator::PROPERTY_TYPES, true));
 check('Below ₱5,000 present', in_array('Below ₱5,000', Validator::BILL_RANGES, true));
@@ -96,7 +96,7 @@ $valid = [
     'project_location'     => 'Davao City',
     'electricity_provider' => 'Davao Light',
     'property_type'        => 'Residential',
-    'bill_range'           => '₱8,000–₱12,000',
+    'bill_range'           => '₱8,000–₱11,999',
     'processing_consent'   => '1',
 ];
 

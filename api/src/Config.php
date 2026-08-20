@@ -91,8 +91,41 @@ final class Config
         self::$values = $loaded;
     }
 
+    /** Staging config — alongside production config, outside the public webroot. */
+    private const STAGING_CONFIG_PATH =
+        '/home/u500192602/domains/jacsolarcorp.com/jac_quote_staging_config.php';
+
+    /** Verified production document root (exact). */
+    private const PRODUCTION_DOCROOT =
+        '/home/u500192602/domains/jacsolarcorp.com/public_html';
+
+    /** Verified staging document root (exact). */
+    private const STAGING_DOCROOT =
+        '/home/u500192602/domains/jacsolarcorp.com/public_html/public_html/staging-app';
+
     private static function resolvePath(): ?string
     {
+        $docRoot = isset($_SERVER['DOCUMENT_ROOT'])
+            ? rtrim((string) $_SERVER['DOCUMENT_ROOT'], '/')
+            : '';
+
+        if ($docRoot !== '') {
+            if ($docRoot === self::STAGING_DOCROOT) {
+                return is_readable(self::STAGING_CONFIG_PATH)
+                    ? self::STAGING_CONFIG_PATH
+                    : null;  // staging config missing → fail closed
+            }
+
+            if ($docRoot === self::PRODUCTION_DOCROOT) {
+                return is_readable(self::EXTERNAL_PATH)
+                    ? self::EXTERNAL_PATH
+                    : null;
+            }
+
+            return null;  // unrecognized docroot → fail closed
+        }
+
+        // CLI / no DOCUMENT_ROOT — unchanged from baseline.
         if (is_readable(self::EXTERNAL_PATH)) {
             return self::EXTERNAL_PATH;
         }
