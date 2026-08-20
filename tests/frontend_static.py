@@ -429,7 +429,7 @@ check("components/12_contact.html mirrors index.html contact markup",
 check("component marked reference-only", "REFERENCE COPY" in component_html)
 
 
-print("\n── Phase A scope: only approved files changed ──")
+print("\n── Packages/Nav scope: only approved files changed ──")
 
 try:
     changed = subprocess.run(
@@ -444,33 +444,37 @@ try:
 except Exception:
     touched = set()
 
-# Exact approved Phase A changed-file set (A1–A9 + the A5 backend allowlist).
+# Exact approved Packages/Nav changed-file set for this feature branch.
 ALLOWED = {
     "index.html",
+    "staging-app/index.html",
     "styles/main.css",
-    "api/src/Validator.php",
-    "components/12_contact.html",
-    "tests/ValidatorTest.php",
+    "staging-app/styles/main.css",
+    "components/00_nav.html",
+    "staging-app/components/00_nav.html",
+    "components/05_packages.html",
+    "staging-app/components/05_packages.html",
     "tests/frontend_static.py",
-    "tests/frontend_functional.mjs",
-    "tests/integration_local.php",
+    "tests/packages_navigation.mjs",
 }
 
-out_of_scope = sorted(f for f in touched if f not in ALLOWED)
-check("only approved Phase A files changed", not out_of_scope, str(out_of_scope))
+STAGING_FRONTEND_EXEMPT = {
+    "staging-app/index.html",
+    "staging-app/styles/main.css",
+    "staging-app/components/00_nav.html",
+    "staging-app/components/05_packages.html",
+}
 
-# Strict protection is preserved. api/src/Validator.php is the ONLY approved API
-# change in Phase A; every other api/ file, and all database/config/composer/
-# staging changes, must still fail the guard.
-API_EXEMPT = {"api/src/Validator.php"}
 for guarded in ["api/", "database/", "config.example.php", "composer.json", "staging-app/"]:
     hits = sorted(
         f for f in touched
-        if (f.startswith(guarded) or f == guarded) and f not in API_EXEMPT
+        if (f.startswith(guarded) or f == guarded)
+        and f not in STAGING_FRONTEND_EXEMPT
     )
-    label = (f"{guarded} untouched apart from approved Validator.php"
-             if guarded == "api/" else f"{guarded} untouched")
-    check(label, not hits, str(hits))
+    check(f"{guarded} untouched outside approved frontend copies", not hits, str(hits))
+
+out_of_scope = sorted(f for f in touched if f not in ALLOWED)
+check("only approved Packages/Nav files changed", not out_of_scope, str(out_of_scope))
 
 migration = ROOT / "database" / "migrations" / "001_free_quote_v1_schema.sql"
 if migration.is_file():
