@@ -3,15 +3,15 @@
 <div class="pkg-wrap">
 <header class="pkg-intro fade-up">
 <div class="pkg-eyebrow">Solar Packages</div>
-<h2 class="pkg-title">Solar packages for every starting point</h2>
-<p class="pkg-sub">Start with your monthly electric bill. We’ll show every package range that includes it, then confirm final sizing after a free usage and site assessment.</p>
+<h2 class="pkg-title">Solar, engineered to <em>your consumption.</em></h2>
+<p class="pkg-sub">Use your monthly bill to find a recommended starting package. Final sizing is confirmed after assessing your actual usage and site.</p>
 </header>
 
 <section class="bill-finder fade-up" aria-labelledby="billFinderHeading">
 <div class="bill-finder-copy">
 <span class="bill-finder-kicker">Package finder</span>
 <h3 id="billFinderHeading">What’s your average monthly bill?</h3>
-<p>Enter or slide to your usual bill, then find the package ranges that are sensible starting points for comparison.</p>
+<p>Enter or slide to your usual bill and we’ll point you to one recommended starting package for comparison.</p>
 </div>
 <div class="bill-finder-controls">
 <label class="bill-finder-label" for="billFinder">Monthly electric bill</label>
@@ -22,12 +22,18 @@
 <label class="bill-slider-label" for="billSlider">Adjust monthly bill</label>
 <input class="bill-slider" id="billSlider" type="range" min="0" max="32000" step="500" value="0" aria-describedby="billFinderHelp" oninput="syncBillInput(this.value)"/>
 <div class="bill-range-scale" aria-hidden="true"><span>₱0</span><span>₱16,000</span><span>₱32,000+</span></div>
-<button class="bill-find-button" id="findPackagesBtn" type="button">Find My Packages</button>
-<p class="bill-finder-help" id="billFinderHelp">A comparison guide only. Final configuration follows a site and usage assessment.</p>
+<button class="bill-find-button" id="findPackagesBtn" type="button">Find my package</button>
+<p class="bill-finder-help" id="billFinderHelp" role="status" aria-live="polite">A recommended starting point — not a final quote.</p>
 </div>
 </section>
 
-<div class="pkg-result-summary" id="billHint" role="status" aria-live="polite">Choose a bill amount, then find matching packages.</div>
+<div class="pkg-toolbar fade-up">
+<div class="pkg-category-toggle" role="tablist" aria-label="Package category">
+<button class="active" id="tabHomes" type="button" role="tab" aria-selected="true" aria-controls="pkgGrid">For Homes</button>
+<button id="tabBusiness" type="button" role="tab" aria-selected="false" aria-controls="pkgGrid">For Business</button>
+</div>
+<div class="pkg-count" id="packageCount" aria-live="polite">4 packages for homes</div>
+</div>
 
 <svg class="pkg-icon-sprite" aria-hidden="true">
 <defs>
@@ -45,10 +51,10 @@
 </svg>
 
 <div class="pkg-grid fade-up" id="pkgGrid" tabindex="0" aria-label="Solar package catalog in ascending order">
-<article class="pkg-card" id="card-sunrise-3" data-package-id="sunrise-3" data-tier="starter">
-<span class="pkg-match-label"></span><span class="pkg-tier">Starter</span><h3 class="pkg-name">Sunrise 3 HB</h3>
+<article class="pkg-card" id="card-sunrise-3" data-package-id="sunrise-3" data-tier="starter" data-category="homes">
+<span class="pkg-recommendation-ribbon">Recommended</span><span class="pkg-tier">Starter</span><h3 class="pkg-name">Sunrise 3 HB</h3>
 <div class="pkg-bill-label">Monthly bill guide</div><p class="pkg-range">Below ₱5,000</p>
-<div class="pkg-uses-label">Typical loads</div><div class="pkg-uses">
+<div class="pkg-uses-label">Typical uses</div><div class="pkg-uses">
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-bulb"/></svg></span><span>Lighting</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-fridge"/></svg></span><span>Refrigerator</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-tv"/></svg></span><span>TV</span></div>
@@ -57,10 +63,10 @@
 <div class="pkg-card-spacer"></div><button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button><p class="pkg-card-custom-note">Fully customizable based on site assessment</p>
 </article>
 
-<article class="pkg-card" id="card-sunbeam-6" data-package-id="sunbeam-6" data-tier="core">
-<span class="pkg-match-label"></span><span class="pkg-tier">Core</span><h3 class="pkg-name">Sunbeam 6 HB</h3>
+<article class="pkg-card" id="card-sunbeam-6" data-package-id="sunbeam-6" data-tier="core" data-category="homes">
+<span class="pkg-recommendation-ribbon">Recommended</span><span class="pkg-tier">Core</span><h3 class="pkg-name">Sunbeam 6 HB</h3>
 <div class="pkg-bill-label">Monthly bill guide</div><p class="pkg-range">₱5,000–₱8,000</p>
-<div class="pkg-uses-label">Typical loads</div><div class="pkg-uses">
+<div class="pkg-uses-label">Typical uses</div><div class="pkg-uses">
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-aircon"/></svg></span><span>Aircon</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-fridge"/></svg></span><span>Refrigerator</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-computer"/></svg></span><span>Computer</span></div>
@@ -69,10 +75,10 @@
 <div class="pkg-card-spacer"></div><button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button><p class="pkg-card-custom-note">Fully customizable based on site assessment</p>
 </article>
 
-<article class="pkg-card" id="card-sunburst-8" data-package-id="sunburst-8" data-tier="growth">
-<span class="pkg-match-label"></span><span class="pkg-tier">Growth</span><h3 class="pkg-name">Sunburst 8 HB</h3>
+<article class="pkg-card" id="card-sunburst-8" data-package-id="sunburst-8" data-tier="growth" data-category="homes">
+<span class="pkg-recommendation-ribbon">Recommended</span><span class="pkg-tier">Growth</span><h3 class="pkg-name">Sunburst 8 HB</h3>
 <div class="pkg-bill-label">Monthly bill guide</div><p class="pkg-range">₱6,000–₱10,000</p>
-<div class="pkg-uses-label">Typical loads</div><div class="pkg-uses">
+<div class="pkg-uses-label">Typical uses</div><div class="pkg-uses">
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-aircon"/></svg></span><span>Aircon</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-fridge"/></svg></span><span>Refrigerator</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-washer"/></svg></span><span>Washing Machine</span></div>
@@ -81,10 +87,10 @@
 <div class="pkg-card-spacer"></div><button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button><p class="pkg-card-custom-note">Fully customizable based on site assessment</p>
 </article>
 
-<article class="pkg-card" id="card-sunflare-10" data-package-id="sunflare-10" data-tier="growth">
-<span class="pkg-match-label"></span><span class="pkg-tier">Growth</span><h3 class="pkg-name">Sunflare 10 HB</h3>
+<article class="pkg-card" id="card-sunflare-10" data-package-id="sunflare-10" data-tier="growth" data-category="homes">
+<span class="pkg-recommendation-ribbon">Recommended</span><span class="pkg-tier">Growth</span><h3 class="pkg-name">Sunflare 10 HB</h3>
 <div class="pkg-bill-label">Monthly bill guide</div><p class="pkg-range">₱8,000–₱12,000</p>
-<div class="pkg-uses-label">Typical loads</div><div class="pkg-uses">
+<div class="pkg-uses-label">Typical uses</div><div class="pkg-uses">
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-aircon"/></svg></span><span>Aircon</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-washer"/></svg></span><span>Washing Machine</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-computer"/></svg></span><span>Computer</span></div>
@@ -93,11 +99,11 @@
 <div class="pkg-card-spacer"></div><button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button><p class="pkg-card-custom-note">Fully customizable based on site assessment</p>
 </article>
 
-<article class="pkg-card" id="card-suncrest-12" data-package-id="suncrest-12" data-tier="growth">
-<span class="pkg-match-label"></span><span class="pkg-tier">Growth</span><h3 class="pkg-name">Suncrest 12 HB</h3>
+<article class="pkg-card" id="card-suncrest-12" data-package-id="suncrest-12" data-tier="growth" data-category="business" hidden>
+<span class="pkg-recommendation-ribbon">Recommended</span><span class="pkg-tier">Growth</span><h3 class="pkg-name">Suncrest 12 HB</h3>
 <div class="pkg-bill-label">Monthly bill guide</div><p class="pkg-range">₱10,000–₱14,000</p>
-<div class="pkg-uses-label">Typical loads</div><div class="pkg-uses">
-<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-factory"/></svg></span><span>Commercial</span></div>
+<div class="pkg-uses-label">Typical uses</div><div class="pkg-uses">
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-factory"/></svg></span><span>Commercial / Industrial</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-pump"/></svg></span><span>Water Pump</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-computer"/></svg></span><span>Computer</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-washer"/></svg></span><span>Washing Machine</span></div>
@@ -105,11 +111,11 @@
 <div class="pkg-card-spacer"></div><button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button><p class="pkg-card-custom-note">Fully customizable based on site assessment</p>
 </article>
 
-<article class="pkg-card" id="card-sunforge-16" data-package-id="sunforge-16" data-tier="forge">
-<span class="pkg-match-label"></span><span class="pkg-tier">Sunforge</span><h3 class="pkg-name">Sunforge 16 HB</h3>
+<article class="pkg-card" id="card-sunforge-16" data-package-id="sunforge-16" data-tier="forge" data-category="business" hidden>
+<span class="pkg-recommendation-ribbon">Recommended</span><span class="pkg-tier">Sunforge</span><h3 class="pkg-name">Sunforge 16 HB</h3>
 <div class="pkg-bill-label">Monthly bill guide</div><p class="pkg-range">₱14,000–₱18,000</p>
-<div class="pkg-uses-label">Typical loads</div><div class="pkg-uses">
-<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-factory"/></svg></span><span>Commercial</span></div>
+<div class="pkg-uses-label">Typical uses</div><div class="pkg-uses">
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-factory"/></svg></span><span>Commercial / Industrial</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-aircon"/></svg></span><span>Aircon</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-computer"/></svg></span><span>Computer</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-washer"/></svg></span><span>Washing Machine</span></div>
@@ -117,11 +123,11 @@
 <div class="pkg-card-spacer"></div><button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button><p class="pkg-card-custom-note">Fully customizable based on site assessment</p>
 </article>
 
-<article class="pkg-card" id="card-sunforge-18" data-package-id="sunforge-18" data-tier="forge">
-<span class="pkg-match-label"></span><span class="pkg-tier">Sunforge</span><h3 class="pkg-name">Sunforge 18 HB</h3>
+<article class="pkg-card" id="card-sunforge-18" data-package-id="sunforge-18" data-tier="forge" data-category="business" hidden>
+<span class="pkg-recommendation-ribbon">Recommended</span><span class="pkg-tier">Sunforge</span><h3 class="pkg-name">Sunforge 18 HB</h3>
 <div class="pkg-bill-label">Monthly bill guide</div><p class="pkg-range">₱16,000–₱22,000</p>
-<div class="pkg-uses-label">Typical loads</div><div class="pkg-uses">
-<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-factory"/></svg></span><span>Commercial</span></div>
+<div class="pkg-uses-label">Typical uses</div><div class="pkg-uses">
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-factory"/></svg></span><span>Commercial / Industrial</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-aircon"/></svg></span><span>Aircon</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-computer"/></svg></span><span>Computer</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-pump"/></svg></span><span>Water Pump</span></div>
@@ -129,11 +135,11 @@
 <div class="pkg-card-spacer"></div><button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button><p class="pkg-card-custom-note">Fully customizable based on site assessment</p>
 </article>
 
-<article class="pkg-card" id="card-sunforge-20" data-package-id="sunforge-20" data-tier="forge">
-<span class="pkg-match-label"></span><span class="pkg-tier">Sunforge</span><h3 class="pkg-name">Sunforge 20 HB</h3>
+<article class="pkg-card" id="card-sunforge-20" data-package-id="sunforge-20" data-tier="forge" data-category="business" hidden>
+<span class="pkg-recommendation-ribbon">Recommended</span><span class="pkg-tier">Sunforge</span><h3 class="pkg-name">Sunforge 20 HB</h3>
 <div class="pkg-bill-label">Monthly bill guide</div><p class="pkg-range">₱18,000–₱24,000</p>
-<div class="pkg-uses-label">Typical loads</div><div class="pkg-uses">
-<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-factory"/></svg></span><span>Commercial</span></div>
+<div class="pkg-uses-label">Typical uses</div><div class="pkg-uses">
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-factory"/></svg></span><span>Commercial / Industrial</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-pump"/></svg></span><span>Water Pump</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-computer"/></svg></span><span>Computer</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-aircon"/></svg></span><span>Aircon</span></div>
@@ -141,12 +147,12 @@
 <div class="pkg-card-spacer"></div><button class="btn-pkg-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button><p class="pkg-card-custom-note">Fully customizable based on site assessment</p>
 </article>
 
-<article class="pkg-card" id="card-sunforge-24" data-package-id="sunforge-24" data-tier="forge">
-<span class="pkg-match-label"></span><span class="pkg-tier">Sunforge</span><h3 class="pkg-name">Sunforge 24 HB</h3>
+<article class="pkg-card" id="card-sunforge-24" data-package-id="sunforge-24" data-tier="forge" data-category="business" hidden>
+<span class="pkg-recommendation-ribbon">Recommended</span><span class="pkg-tier">Sunforge</span><h3 class="pkg-name">Sunforge 24 HB</h3>
 <div class="pkg-bill-label">Monthly bill guide</div><p class="pkg-range">₱20,000–₱30,000</p>
-<div class="pkg-uses-label">Typical loads</div><div class="pkg-uses">
-<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-factory"/></svg></span><span>Commercial</span></div>
-<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-plant"/></svg></span><span>Agri / Farm</span></div>
+<div class="pkg-uses-label">Typical uses</div><div class="pkg-uses">
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-factory"/></svg></span><span>Commercial / Industrial</span></div>
+<div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-plant"/></svg></span><span>Agricultural / Farm</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-pump"/></svg></span><span>Water Pump</span></div>
 <div class="pkg-use"><span class="pkg-use-icon"><svg><use href="#pkg-icon-computer"/></svg></span><span>Computer</span></div>
 </div><div class="pkg-chips"><span class="pkg-chip">Grid-Tie / Hybrid</span><span class="pkg-chip warranty">25-Yr Panel Warranty</span></div>
@@ -155,9 +161,12 @@
 </div>
 
 <div class="pkg-custom-banner fade-up" id="pkgCustomBanner" tabindex="-1">
-<div class="pkg-custom-banner-text"><strong>Need more than a standard package?</strong><span>We can review custom loads, backup needs, site conditions, and Grid-Tie / Hybrid options through a tailored assessment.</span></div>
+<div class="pkg-custom-banner-text"><strong>Need more than a standard package?</strong><span>Custom-engineered systems are available for off-grid, multi-site, irrigation, ground-mounted, and special-load projects. Grid-Tie or Hybrid options are available.</span></div>
+<div class="pkg-custom-banner-actions">
 <button class="pkg-custom-banner-cta" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Discuss My Solar Needs</button>
+<a class="pkg-custom-banner-phone" href="tel:+639202528376">0920 252 8376</a>
 </div>
-<p class="pkg-disclaimer">Bill ranges and typical loads are starting guides only. Final sizing depends on actual usage, backup needs, and site conditions. 25-Year Panel Performance Warranty.</p>
+</div>
+<p class="pkg-disclaimer">Bill ranges and typical uses are starting guides only—not fixed system specifications or guaranteed simultaneous loads. Final sizing depends on actual usage, backup needs, and site conditions.<br/><span>25-Year Panel Performance Warranty</span></p>
 </div>
 </section>
