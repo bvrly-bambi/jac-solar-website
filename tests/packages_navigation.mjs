@@ -199,7 +199,9 @@ for (const file of files) {
     for (const use of fact.uses) assert.match(card, new RegExp(escapeRegExp(use)), `${file}: ${fact.id} ${use}`);
   }
 
-  assert.match(packageSection, /Solar, engineered to <em>your consumption\.<\/em>/);
+  assert.equal((packageSection.match(/<h2 class="pkg-title">Solar Packages<\/h2>/g) || []).length, 1,
+    `${file}: exactly one package-section Solar Packages heading`);
+  assert.doesNotMatch(packageSection, /Solar, engineered to your consumption\.|pkg-eyebrow/);
   assert.match(packageSection, /For Homes/);
   assert.match(packageSection, /For Business/);
   assert.match(packageSection, /4 packages for homes/);
@@ -211,10 +213,11 @@ for (const file of files) {
   assert.match(packageSection, /Commercial \/ Industrial/);
   assert.match(packageSection, /Agricultural \/ Farm/);
   assert.match(packageSection, /Grid-Tie \/ Hybrid/);
-  assert.match(packageSection, /25-Yr Panel Warranty/);
+  assert.equal((packageSection.match(/25-Year Panel Performance/g) || []).length, 10,
+    `${file}: panel performance appears on nine cards and the disclaimer`);
   assert.match(packageSection, /Discuss My Solar Needs/);
   assert.match(packageSection, /0920 252 8376/);
-  assert.doesNotMatch(packageSection, /Can comfortably power|Typical loads|Net Metering Ready|25-Yr Warranty|Book a free assessment/);
+  assert.doesNotMatch(packageSection, /Can comfortably power|Typical loads|Net Metering Ready|Warranty|Book a free assessment/);
   assert.doesNotMatch(html, /max:\s*99999|style\.order/);
   assert.match(html, /styles\/main\.css\?v=packages-prototype-v3/);
   assert.doesNotMatch(packageSection, /oninput="[^"]*findPackage/);
@@ -290,6 +293,10 @@ assert.match(css, /grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/);
 assert.match(css, /@media \(max-width:1080px\)[\s\S]*repeat\(2,minmax\(0,1fr\)\)/);
 assert.match(css, /scroll-snap-type:x mandatory/);
 assert.match(css, /flex:0 0 83vw/);
+assert.match(css, /\.packages-sec\{[^}]*padding:4rem 3rem 2\.75rem/);
+assert.match(css, /\.roi-sec\{[^}]*padding:3\.25rem 3rem 6rem/);
+assert.match(css, /@media\(max-width:960px\)[\s\S]*\.packages-sec\{padding-bottom:2\.5rem\}[\s\S]*\.roi-sec\{padding-top:3rem\}/);
+assert.match(css, /@media \(max-width:640px\)[\s\S]*\.packages-sec\{padding:3\.5rem 1rem 2\.5rem\}/);
 assert.match(css, /@media \(max-width:640px\)[\s\S]*has-recommendation[\s\S]*opacity:1/);
 assert.match(css, /\.nav-toggle\{[^}]*flex:0 0 44px/);
 assert.equal((css.match(/^\.nav-toggle\{/gm) || []).length, 1, 'one authoritative base nav-toggle rule');

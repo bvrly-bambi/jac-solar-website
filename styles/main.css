@@ -140,7 +140,7 @@ a{text-decoration:none;color:inherit}
 .sector-tile.t-pattern4{background:linear-gradient(135deg,#1E3A5F,#0EA5E9)}
 
 /* ─── PACKAGES ─── */
-.packages-sec{background:radial-gradient(900px 420px at 85% 0,rgba(245,158,11,.1),transparent 62%),linear-gradient(180deg,#F6F8FB 0%,#fff 42%);padding:4rem 3rem 5rem;position:relative;overflow:hidden}
+.packages-sec{background:radial-gradient(900px 420px at 85% 0,rgba(245,158,11,.1),transparent 62%),linear-gradient(180deg,#F6F8FB 0%,#fff 42%);padding:4rem 3rem 2.75rem;position:relative;overflow:hidden}
 .pkg-wrap{width:100%;max-width:1220px;margin:0 auto;min-width:0}
 .pkg-intro{max-width:720px;margin-bottom:2.125rem}
 .pkg-eyebrow{display:inline-flex;align-items:center;gap:9px;margin-bottom:.8rem;color:var(--gold-dark);font:700 11px 'Outfit',sans-serif;letter-spacing:.13em;text-transform:uppercase}
@@ -196,7 +196,7 @@ a{text-decoration:none;color:inherit}
 .pkg-use-icon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .pkg-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:1rem}
 .pkg-chip{padding:5px 8px;border-radius:8px;background:#EEF1F5;color:#475567;font-size:9.5px;font-weight:700;line-height:1.2}
-.pkg-chip.warranty{background:#E9EFFB;color:#1A4FB0}
+.pkg-chip.performance{background:#E9EFFB;color:#1A4FB0}
 .pkg-card-spacer{flex:1}
 .btn-pkg-primary{display:flex;align-items:center;justify-content:center;width:100%;margin-top:1rem;padding:11px 12px;border:0;border-radius:11px;background:var(--gold);color:var(--navy);cursor:pointer;font:800 13px 'Outfit',sans-serif;transition:background .2s,transform .2s}
 .btn-pkg-primary:hover{background:#FFB733;transform:translateY(-1px)}
@@ -223,7 +223,7 @@ a{text-decoration:none;color:inherit}
 .pkg-disclaimer span{font-weight:700;color:#4B5563}
 
 /* ─── ROI / MATH SECTION ─── */
-.roi-sec{background:var(--white);padding:6rem 3rem}
+.roi-sec{background:var(--white);padding:3.25rem 3rem 6rem}
 .roi-inner{max-width:980px;margin:0 auto}
 .roi-table-wrap{overflow-x:auto;margin-top:2.5rem;border-radius:var(--radius-lg);border:1px solid var(--border);box-shadow:var(--shadow-md)}
 .roi-table{width:100%;border-collapse:collapse;font-family:'DM Sans',sans-serif}
@@ -374,6 +374,8 @@ a{text-decoration:none;color:inherit}
 @media(max-width:960px){
   .nav{padding:.85rem 1.5rem}.nav-links{display:none}
   .sec,.packages-sec,.roi-sec,.process-sec,.contact-sec{padding:3.75rem 1.5rem}
+  .packages-sec{padding-bottom:2.5rem}
+  .roi-sec{padding-top:3rem}
   .hero-inner{padding:4.5rem 1.5rem 3.25rem}.hero h1{font-size:36px}
   .benefits-grid{grid-template-columns:1fr 1fr}
   .services-grid,.testi-grid,.about-grid{grid-template-columns:1fr}
@@ -502,7 +504,7 @@ a{text-decoration:none;color:inherit}
   .bill-finder{grid-template-columns:1fr;gap:1.25rem}
 }
 @media (max-width:640px){
-  .packages-sec{padding:3.5rem 1rem}
+  .packages-sec{padding:3.5rem 1rem 2.5rem}
   .pkg-title{font-size:clamp(28px,10vw,38px)}
   .bill-finder{padding:1.25rem;border-radius:18px}
   .bill-input{font-size:23px}
