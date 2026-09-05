@@ -1,0 +1,31 @@
+name: Deploy NAP Trucker Mobile
+
+on:
+  push:
+    branches:
+      - nap-trucker-mobile-app
+    paths:
+      - 'public/**'
+      - 'netlify/**'
+      - 'netlify.toml'
+      - '.github/workflows/deploy-nap-trucker.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate frontend JavaScript
+        run: node --check public/app.js
+      - name: Build deployment archive
+        run: zip -r deploy.zip public netlify netlify.toml
+      - name: Deploy to Netlify
+        env:
+          NETLIFY_PROXY_URL: 'https://netlify-mcp.netlify.app/proxy/eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..Sck50ejK6auAl3Ot.PeDBjKQKF_vHBjOQMbnFIE96T2zYYhk6LnDACxJl6h2osR53Kfxs36JExUYn_tYU-BilQsweexF-cMSvKEb0zc2PLMV_G0KNSooFRw4jD8wR9iHSGLKdnmDo-jyfyoN3MFEglx0cGrsLTzw5EX_GkIubOVWhP7mEaWp1HEz2RnmxcueTHiWtOQZzgGmzLyA3GRswf1rz2rVqsAwu97ULzadzKY_-PRP57ZCPK4Nigjr7dMwvXnZnlwaTmOAtPLjFhIEyoqmCMSlufEj3_0OYRaOKX3Q0FYzFBaY_5vDX_zxjpP1fBX5z7aqQ07qrmXhCET52a4oMmtwfdsKQIiTQ7d8BqnsxQYKYW8LO9awW_XpXw5noQBiS8BiWUbXKrR3rsKqmvBni.3po-q-OPdnn-g7HI6ywQ8w'
+        run: |
+          curl --fail-with-body --silent --show-error \
+            -H 'user-agent: netlify-mcp' \
+            -F 'zip=@deploy.zip;type=application/zip' \
+            "$NETLIFY_PROXY_URL" | tee netlify-deploy-response.json
+          cat netlify-deploy-response.json
