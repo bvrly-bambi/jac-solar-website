@@ -22,10 +22,11 @@ jobs:
         run: zip -r deploy.zip public netlify netlify.toml
       - name: Deploy to Netlify
         env:
-          NETLIFY_PROXY_URL: 'https://netlify-mcp.netlify.app/proxy/eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..Sck50ejK6auAl3Ot.PeDBjKQKF_vHBjOQMbnFIE96T2zYYhk6LnDACxJl6h2osR53Kfxs36JExUYn_tYU-BilQsweexF-cMSvKEb0zc2PLMV_G0KNSooFRw4jD8wR9iHSGLKdnmDo-jyfyoN3MFEglx0cGrsLTzw5EX_GkIubOVWhP7mEaWp1HEz2RnmxcueTHiWtOQZzgGmzLyA3GRswf1rz2rVqsAwu97ULzadzKY_-PRP57ZCPK4Nigjr7dMwvXnZnlwaTmOAtPLjFhIEyoqmCMSlufEj3_0OYRaOKX3Q0FYzFBaY_5vDX_zxjpP1fBX5z7aqQ07qrmXhCET52a4oMmtwfdsKQIiTQ7d8BqnsxQYKYW8LO9awW_XpXw5noQBiS8BiWUbXKrR3rsKqmvBni.3po-q-OPdnn-g7HI6ywQ8w'
+          NETLIFY_PROXY_URL: 'https://netlify-mcp.netlify.app/proxy/eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..4YvSY2Gb0TMIPhX3.JEtAHNolG4CNDEUjmeeK0AoIGt_kyL3WeaAcyc0Us4_SxHHlFMzrQBzZKY0R0-7J3yoPamirVrF0VQhxk9G5PjEjUW1NeujQ1NQ9jdorfrdUc8lcGscVVQkqIUgvnx8goGGkF6mKpO1v2L1eXe-QoyKk9_pG48UtGSen7tNvIq1X3YPP4Yt-v_W5cqRDvorjRN0OuwnL9KnRB-WWTsvF0s5VtUMpBN9Px6GLD9Q3v5s2Pgu-GT1MnowyAsoLeJ7myJUYTVgbHHwabYpuyu_ACGuGI9cfmSdMt_Cw0B3qBr7Ueyxo-IvWI_EVTeRPEpUDikeUrqNn9jFq0kGmNvyXA6mFO8byQ3WprsW0P6EhXNXABq3bOy_ahOcmQ_FgYJdvmGz4Dayg.aZURdxUNF8h_C9P1kDLJDA'
+          SITE_ID: 'ff608fac-528a-41e7-9ee5-6e65cdc0a0d2'
         run: |
           curl --fail-with-body --silent --show-error \
             -H 'user-agent: netlify-mcp' \
             -F 'zip=@deploy.zip;type=application/zip' \
-            "$NETLIFY_PROXY_URL" | tee netlify-deploy-response.json
+            "$NETLIFY_PROXY_URL/api/v1/sites/$SITE_ID/builds" | tee netlify-deploy-response.json
           cat netlify-deploy-response.json
