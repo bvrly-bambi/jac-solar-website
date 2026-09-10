@@ -1,4 +1,5 @@
-<nav class="nav">
+<!-- NAV -->
+<nav class="nav" aria-label="Primary">
 <div class="nav-brand">
 <div class="name">JAC Solar Corporation</div>
 <div class="tag">Harness · Generate · Conserve · Preserve</div>
@@ -10,5 +11,15 @@
 <a href="#about">About</a>
 <a href="#contact">Contact</a>
 </div>
-<button class="nav-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button>
+<button class="nav-btn" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button>
+<button class="nav-toggle" id="navToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navMobile"><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span></button>
 </nav>
+<div class="nav-mobile" id="navMobile" aria-hidden="true">
+<a href="#services">Services</a>
+<a href="#packages">Packages</a>
+<a href="#projects">Projects</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+<a class="nav-mobile-phone" href="tel:+639202528376">Call us: 0920 252 8376</a>
+<button class="nav-mobile-cta" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button>
+</div>

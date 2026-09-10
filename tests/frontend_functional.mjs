@@ -143,7 +143,7 @@ function fillValid(window, doc, { withFile = true } = {}) {
   set('project_location', 'Davao City');
   set('electricity_provider', 'Davao Light');
   set('property_type', 'Residential');
-  set('bill_range', '\u20B18,000\u2013\u20B112,000');
+  set('bill_range', '\u20B18,000\u2013\u20B111,999');
   doc.querySelector('[name="processing_consent"]').checked = true;
   if (withFile) {
     attachFile(window, doc.getElementById('billUpload'));

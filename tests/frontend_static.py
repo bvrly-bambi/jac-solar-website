@@ -239,11 +239,9 @@ PROPERTY_TYPES = [
     "School / Institution", "Government", "Other",
 ]
 BILL_RANGES = [
-    "Below \u20b15,000", "\u20b15,000\u2013\u20b18,000", "\u20b16,000\u2013\u20b110,000",
-    "\u20b18,000\u2013\u20b112,000", "\u20b110,000\u2013\u20b114,000",
-    "\u20b114,000\u2013\u20b118,000", "\u20b116,000\u2013\u20b122,000",
-    "\u20b118,000\u2013\u20b124,000", "\u20b120,000\u2013\u20b130,000",
-    "\u20b130,000 and above",
+    "Below \u20b15,000", "\u20b15,000\u2013\u20b17,999", "\u20b18,000\u2013\u20b111,999",
+    "\u20b112,000\u2013\u20b117,999", "\u20b118,000\u2013\u20b123,999",
+    "\u20b124,000\u2013\u20b129,999", "\u20b130,000 and above",
 ]
 
 property_options = parser.select_options.get("property_type", [])
@@ -264,8 +262,8 @@ check("bill ranges use approved punctuation",
       all("\u2013" in v or v.startswith("Below") or v.endswith("and above") for v in bill_options if v))
 check("bill ranges framed as assessment guides, not guarantees",
       "guide our initial assessment" in normalized)
-check("above-30k custom assessment note present",
-      "Bills above ₱30,000 may require a customized commercial or high-capacity system assessment." in normalized)
+check("30k-and-above neutral guidance note present",
+      "we'll recommend an appropriate system after reviewing your electricity usage and site requirements" in normalized)
 
 
 print("\n── API integration ──")
@@ -431,7 +429,7 @@ check("components/12_contact.html mirrors index.html contact markup",
 check("component marked reference-only", "REFERENCE COPY" in component_html)
 
 
-print("\n── Phase 3 scope: nothing else modified ──")
+print("\n── Packages/Nav scope: only approved files changed ──")
 
 try:
     changed = subprocess.run(
@@ -446,25 +444,37 @@ try:
 except Exception:
     touched = set()
 
+# Exact approved Packages/Nav changed-file set for this feature branch.
 ALLOWED = {
     "index.html",
-    "components/12_contact.html",
+    "staging-app/index.html",
     "styles/main.css",
-    "privacy.html",
-    "docs/FREE_QUOTE_V1_PHASE3_FRONTEND.md",
+    "staging-app/styles/main.css",
+    "components/00_nav.html",
+    "staging-app/components/00_nav.html",
+    "components/05_packages.html",
+    "staging-app/components/05_packages.html",
     "tests/frontend_static.py",
-    "tests/frontend_functional.mjs",
-    # Phase 2's own checker: one stale assertion ("privacy.html not created")
-    # had to be retired now that Phase 3 legitimately creates that page.
-    "tests/static_analysis.py",
+    "tests/packages_navigation.mjs",
 }
 
-out_of_scope = sorted(f for f in touched if f not in ALLOWED)
-check("only Phase 3 files changed", not out_of_scope, str(out_of_scope))
+STAGING_FRONTEND_EXEMPT = {
+    "staging-app/index.html",
+    "staging-app/styles/main.css",
+    "staging-app/components/00_nav.html",
+    "staging-app/components/05_packages.html",
+}
 
 for guarded in ["api/", "database/", "config.example.php", "composer.json", "staging-app/"]:
-    hits = sorted(f for f in touched if f.startswith(guarded) or f == guarded)
-    check(f"{guarded} untouched", not hits, str(hits))
+    hits = sorted(
+        f for f in touched
+        if (f.startswith(guarded) or f == guarded)
+        and f not in STAGING_FRONTEND_EXEMPT
+    )
+    check(f"{guarded} untouched outside approved frontend copies", not hits, str(hits))
+
+out_of_scope = sorted(f for f in touched if f not in ALLOWED)
+check("only approved Packages/Nav files changed", not out_of_scope, str(out_of_scope))
 
 migration = ROOT / "database" / "migrations" / "001_free_quote_v1_schema.sql"
 if migration.is_file():

@@ -140,7 +140,7 @@ function makeLead(string $reference, string $token, string $fingerprint, string 
         'project_location'       => 'Davao City',
         'electricity_provider'   => 'Davao Light',
         'property_type'          => 'Residential',
-        'bill_range'             => '₱8,000–₱12,000',
+        'bill_range'             => '₱8,000–₱11,999',
         'message'                => null,
         'specific_requirements'  => null,
         'original_filename'      => 'bill.pdf',
@@ -178,7 +178,7 @@ check('lead inserted', $leadId > 0);
 $row = $pdo->query('SELECT * FROM quote_requests WHERE id = ' . $leadId)->fetch();
 check('status defaults to New', $row['lead_status'] === 'New');
 check('reference stored', $row['reference_number'] === $first);
-check('peso/en-dash bill range round-trips', $row['bill_range'] === '₱8,000–₱12,000');
+check('peso/en-dash bill range round-trips', $row['bill_range'] === '₱8,000–₱11,999');
 check('processing consent stored as 1', (int) $row['processing_consent'] === 1);
 check('marketing consent stored as 0', (int) $row['marketing_consent'] === 0);
 check('marketing timestamp null', $row['marketing_consent_at'] === null);
