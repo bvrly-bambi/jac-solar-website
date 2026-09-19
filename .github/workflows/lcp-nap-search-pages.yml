@@ -1,0 +1,40 @@
+name: Deploy C6 Search to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tools/lcp-nap-c6-search/**"
+      - ".github/workflows/lcp-nap-search-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "lcp-nap-search-pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload search site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: tools/lcp-nap-c6-search
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
