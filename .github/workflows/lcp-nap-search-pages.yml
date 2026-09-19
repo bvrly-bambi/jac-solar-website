@@ -1,4 +1,4 @@
-name: Deploy C6 Search to GitHub Pages
+name: Deploy C6 Search to Netlify
 
 on:
   push:
@@ -8,35 +8,56 @@ on:
       - ".github/workflows/lcp-nap-search-pages.yml"
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "lcp-nap-search-pages"
-  cancel-in-progress: true
-
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
+      - name: Build static deployment archive
+        run: |
+          cd tools/lcp-nap-c6-search
+          zip -r "$GITHUB_WORKSPACE/deploy-c6.zip" .
 
-      - name: Upload search site
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: tools/lcp-nap-c6-search
+      - name: Deploy to Netlify
+        env:
+          NETLIFY_PROXY_URL: 'https://netlify-mcp.netlify.app/proxy/eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..sqwLW9KEAPBjBu6J.RFdRbe7wYxqXI4SpbrUO9RsE7T5CSIqZVMHlICkoTcCjQXM643wgIQu_ChBpfpDFCM9S8pUOCN2bn3WuqeVQ6Bkqu0JEVZ0uOBpICkWy1nhtuoAjE-x0qayXW0lbZgOsVOdRXveS-tMkvptDMFNQsbvDBS5jRO99Zg4Vdv4D0440eSbxl8VM5N2pKDyjYfj4K49lCsqMBBbD-dnkhTvBPlH6kDHwv2e0d0fkwLHcjLoji9i1SzL9wJ05m18LsucPg7hTXmNQqmezlcvkO6P9-Q1A1xwgPwlqcgD73snZUIkthFywsh05ZgpKKyYg7-mxD55dkD1FaL7DNX_aAmxfOM6j-T0SnchF2Nxd66UO5Wf1jeWNvTaL0UTBR7oYlnob5gZ-kpSo.y5WwkOdGnevwtdQxE66rvA'
+          SITE_ID: '3e463074-d8b4-476f-8b49-e612a87df94a'
+        run: |
+          curl --fail-with-body --silent --show-error \
+            -H 'user-agent: netlify-mcp' \
+            -F 'zip=@deploy-c6.zip;type=application/zip' \
+            "$NETLIFY_PROXY_URL/api/v1/sites/$SITE_ID/builds" | tee netlify-deploy-response.json
+          python - <<'PY'
+          import json
+          d=json.load(open('netlify-deploy-response.json'))
+          if isinstance(d,list): d=d[0]
+          deploy_id=d.get('deploy_id')
+          print('deploy_id=', deploy_id)
+          if not deploy_id:
+              raise SystemExit('No deploy_id returned')
+          open('deploy_id.txt','w').write(deploy_id)
+          PY
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Wait for Netlify deployment
+        env:
+          NETLIFY_PROXY_URL: 'https://netlify-mcp.netlify.app/proxy/eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..sqwLW9KEAPBjBu6J.RFdRbe7wYxqXI4SpbrUO9RsE7T5CSIqZVMHlICkoTcCjQXM643wgIQu_ChBpfpDFCM9S8pUOCN2bn3WuqeVQ6Bkqu0JEVZ0uOBpICkWy1nhtuoAjE-x0qayXW0lbZgOsVOdRXveS-tMkvptDMFNQsbvDBS5jRO99Zg4Vdv4D0440eSbxl8VM5N2pKDyjYfj4K49lCsqMBBbD-dnkhTvBPlH6kDHwv2e0d0fkwLHcjLoji9i1SzL9wJ05m18LsucPg7hTXmNQqmezlcvkO6P9-Q1A1xwgPwlqcgD73snZUIkthFywsh05ZgpKKyYg7-mxD55dkD1FaL7DNX_aAmxfOM6j-T0SnchF2Nxd66UO5Wf1jeWNvTaL0UTBR7oYlnob5gZ-kpSo.y5WwkOdGnevwtdQxE66rvA'
+        run: |
+          DEPLOY_ID="$(cat deploy_id.txt)"
+          for i in $(seq 1 40); do
+            curl --fail-with-body --silent --show-error \
+              -H 'user-agent: netlify-mcp' \
+              "$NETLIFY_PROXY_URL/api/v1/deploys/$DEPLOY_ID" > deploy-status.json
+            STATE="$(python - <<'PY'
+          import json
+          print(json.load(open('deploy-status.json')).get('state',''))
+          PY
+            )"
+            echo "Netlify state: $STATE"
+            if [ "$STATE" = "ready" ]; then exit 0; fi
+            if [ "$STATE" = "error" ]; then cat deploy-status.json; exit 1; fi
+            sleep 5
+          done
+          echo "Timed out waiting for Netlify"
+          exit 1
